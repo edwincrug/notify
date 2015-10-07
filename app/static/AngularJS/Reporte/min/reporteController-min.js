@@ -1,0 +1,1 @@
+registrationModule.controller("reporteController",function(r,o,e,n,t){var l=function(r,o,e,n){t.error("Ocurrio un problema "+r.message)}});

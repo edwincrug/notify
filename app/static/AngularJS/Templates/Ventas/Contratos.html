@@ -1,0 +1,147 @@
+<link href="css/contratos.css" rel="stylesheet" />
+<div cg-busy="myPromise">
+  <div ng-init="init()" ng-style="style()" resize>
+
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Cerrar</span></button>
+                <h3 class="modal-title modalCenterTitle" id="myModalLabel"> Administra Información General </h3>
+            </div>
+            <div class="modal-body">
+                <table class="tableDesign">
+                    <tr>
+                        <td colspan="1">
+                            <label class="control-label labelEdit" for="trazon"> Razon Social</label>
+                        </td>
+                        <td colspan="3">
+                            <input type="text" id="trazon" class="form-control" ng-model="cliente.razonSocial" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <label class="control-label labelEdit" for="trazon"> Nombre Comercial</label>
+                        </td>
+                        <td colspan="3">
+                            <input type="text" id="trazon" class="form-control" ng-model="cliente.nombreComercial" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label50">
+                            <label class="control-label labelEdit" for="tmail"> Email</label>
+                        </td>
+                        <td class="texto50">
+                            <input type="text" id="tmail" class="form-control" ng-model="cliente.mailPrincipal" />
+                        </td>
+                        <td class="label50">
+                            <label class="control-label labelEdit" for="tweb"> Página WEB</label>
+                        </td>
+                        <td class="texto50">
+                            <input type="text" id="tweb" class="form-control" ng-model="cliente.paginaWeb" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label50">
+                            <label class="control-label labelEdit" for="tfechai"> Fecha Inicio</label>
+                        </td>
+                        <td class="texto50">
+                            <input type="text" id="tfechai" class="form-control" ng-model="cliente.fechaInicio" disabled />
+                        </td>
+                        <td class="label50">
+                            <label class="control-label labelEdit" for="ttipoc"> Tipo Persona</label>
+                        </td>
+                        <td class="texto50">
+                            <div class="btn-group" dropdown is-open="status.isopenClienteTipoPersona">
+                                <button type="button" class="btn btn-primary dropdown-toggle">
+                                    {{ labelClienteTipoPersona }}  <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a ng-click="SetClienteTipoPersona(1, $event, 'Físico')">Físico</a></li>
+                                    <li><a ng-click="SetClienteTipoPersona(2,$event, 'Moral')">Moral</a></li>
+                                </ul>
+                            </div>
+                            <!--<input type="text" id="ttipoc" class="form-control" ng-model="cliente.tipoFiscal" />-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label50">
+                            <label class="control-label labelEdit" for="tcontacto"> Contacto</label>
+                        </td>
+                        <td class="texto50">
+                            <input type="text" id="tcontacto" class="form-control" ng-model="cliente.nombre" />
+                        </td>
+                        <td class="label50">
+                            <label class="control-label labelEdit" for="tle"> L.E.</label>
+                        </td>
+                        <td class="texto50">
+                            <input type="text" id="tle" class="form-control" ng-model="cliente.LE" disabled />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label50">
+                            <label class="control-label labelEdit" for="tRFC"> RFC</label>
+                        </td>
+                        <td class="texto50">
+                            <input type="text" id="tRFC" class="form-control" ng-model="cliente.rfc" />
+                        </td>
+                        <td class="label50">
+                            <label class="control-label labelEdit" for="tTel"> Teléfono</label>
+                        </td>
+                        <td class="texto50">
+                            <input type="text" id="tTel" class="form-control" ng-model="cliente.telefono" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label50">
+                            <label class="control-label labelEdit" for="tcie"> CIE</label>
+                        </td>
+                        <td class="texto50">
+                            <input type="text" id="tcie" class="form-control" ng-model="cliente.cie" />
+                        </td>
+                        <td class="label50">
+                            <label class="control-label labelEdit" for="tejecutivo"> Ejecutivo</label>
+                        </td>
+                        <td class="texto50">
+                            <input type="text" id="tejecutivo" class="form-control" ng-model="cliente.ejecutivo" disabled />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="label50">
+                            <label class="control-label labelEdit" for="toficina"> Oficina</label>
+                        </td>
+                        <td class="texto50">
+                            <input type="text" id="toficina" class="form-control" ng-model="cliente.oficina" />
+                        </td>
+                        <td class="label50"></td>
+                        <td class="texto50"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <label class="control-label labelEdit" for="tGiro"> Giro Comercial</label>
+                        </td>
+                        <td colspan="3">
+                            <input type="text" id="tGiro" class="form-control" ng-model="cliente.giroComercial" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <label class="control-label labelEdit" for="tcomentarios"> Comentarios</label>
+                        </td>
+                        <td colspan="3">
+                            <textarea rows="3" id="tcomentarios" style="height:80px;" class="form-control" ng-model="cliente.nota" />
+                        </td>
+                    </tr>
+
+                </table>
+                <button type="button" class="btn btn-primary flotarIzquierda" ng-click="GuardaGeneral()" data-loading-text="Guardando..." id="btnGuardaGeneral">Guardar</button>
+                <br />
+                <br />
+
+
+            </div>
+        </div><!-- /.modal-content -->
+
+
+  </div>
+</div>

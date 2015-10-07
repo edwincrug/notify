@@ -1,0 +1,80 @@
+<link href="css/salaSearch.css" rel="stylesheet" />
+<link href='css/fullcalendar.css' rel='stylesheet' />
+<div cg-busy="myPromise">
+	<div ng-init="init()" ng-style="style()" resize>
+
+		<section id="header" class="mainContent">
+			<h1 id="titulo"> Envíos para Hoy </h1>
+		</section>
+		<section id="controls" class="mainContent">
+			<!-- <div class="row">
+				<div class="col-md-6">
+					<div >
+						<div class="input-group tBusca">
+							<div class="input-group-addon">@</div>
+							<input class="form-control ui-autocomplete-input ng-pristine ng-valid" type="text" placeholder="Introduzca el nombre o clave de cliente" id="searchEmpresa" ng-model="semilla" ng-click="Clear()" autocomplete="off">
+						</div>
+						<div class="RightEdit" ng-click="AdminGeneral()">
+							<img src="images/body/edit.png" title="Editar">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<p class="input-group">
+						<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt2" is-open="opened2" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+					</p>
+				</div>
+				<div class="col-md-3" >
+					<button type="button" class="btn btn-primary" aria-label="Left Align" id="buscar">
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar
+				</button>
+				</div>
+			</div> -->
+		</section>
+		<section id="grid" class="mainContent">
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Del Valle 1</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table"> 
+						<thead>
+							<tr>
+								<th>Cliente</th>
+								<th>Remitente</th>
+								<th>Destinatario</th>
+								<th>Material</th>
+								<th>Tipo</th>
+								<th>Fecha</th>
+								<th>Hora</th>
+								<th>Comentarios</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>78 | Empowerment Servicios y Asociados</td>
+								<td>Juan López</td>
+								<td>Jorge Pérez</td>
+								<td>Este material</td>
+								<td>Tipo</td>
+								<td>Fecha</td>
+								<td>Hora</td>
+								<td>
+									<button type="button" class="btn btn-default" aria-label="Left Align">
+										<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+									</button>
+								</td>	
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+		<section id="footer" class="mainContent">
+		</section>
+	</div><!-- Contenedor principal -->
+</div>

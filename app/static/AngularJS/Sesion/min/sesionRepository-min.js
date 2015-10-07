@@ -1,0 +1,1 @@
+var sesionUrl=global_settings.urlCORS+"api/sesionapi/";registrationModule.factory("sesionRepository",function(e){return{get:function(){return e.get(sesionUrl+"0-0")},getSesion:function(n){return e.get(sesionUrl+"3-"+n)},add:function(n){return e.post(sesionUrl,n)},"delete":function(){return e["delete"](sesionUrl)},put:function(n){return e.put(sesionUrl,n)}}});

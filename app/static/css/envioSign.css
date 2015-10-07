@@ -1,0 +1,18 @@
+#header {
+  padding-top: 10px;
+  padding-bottom: 30px; }
+
+#titulo {
+  font-size: 28px;
+  font-weight: 100;
+  width: 100%;
+  text-align: -webkit-center; }
+
+#body {
+  padding-left: 5%;
+  padding-right: 5%; }
+
+.firma {
+  width: 600px;
+  height: 422px;
+  border: none; }

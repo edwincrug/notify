@@ -1,0 +1,79 @@
+﻿<link href="css/envioSign.css" rel="stylesheet" />
+<div cg-busy="myPromise">
+	<div ng-init="init()" ng-style="style()" resize>
+		<section id="header">
+			<div id="titulo">
+				Confirmar entrega
+			</div>
+		</section>
+		<section id="content">
+
+			<section id="sign" >
+				<br>
+				<div collapse="isCollapsed">
+					<div class="well well-lg">
+						<div class="row">
+							<label id="cliente" class="control-label">
+								{{ envio.razonSocial }}
+							</label>
+						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<br>
+								<div class="row">
+									<div class="col-lg-3 control-label">Remitente</div>
+									<label class="col-lg-3 control-label">{{ envio.remitente }}</label>
+
+								</div>
+								<div class="row">
+									<div class="col-lg-3 control-label">Destinatario</div>
+									<label class="col-lg-3 control-label">{{ envio.destinatario }}</label>
+
+								</div>
+								<div class="row">
+									<div class="col-lg-3 control-label">Material</div>
+									<label class="col-lg-3 control-label">{{ envio.material }}</label>
+
+								</div>
+								<div class="row">
+									<div class="col-lg-3 control-label">Comentarios</div>
+									<div class="col-lg-9">
+										<textarea class="form-control" rows="2" ng-model="comentarios" placeholder="Comentarios"></textarea>
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="col-md-7">
+								Contactos
+								<div id="contentContactos">
+									<div class="gridStyle Grid200" ng-grid="gridOptions"></div>
+								</div>
+							</div>
+						</div>	
+						<br>
+						<div class="row">
+							<div class="col-md-9">
+								<div class="form-group">
+									<label class="col-lg-3 control-label">Firma</label>
+									<div class="col-lg-9">
+										<iframe id="firmaMonitor" class="firma"></iframe>
+									</div>
+								</div>
+
+							</div>
+							<div class="col-md-3">
+								<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="Cancelar();"> 
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar
+								</button>
+								<button type="button" class="btn btn-primary" aria-label="Left Align" ng-click="FinalizarEntrega();" data-loading-text="Cerrando..." id="btnFinalizarEnvio">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Finalizar Entrega
+								</button>
+							</div>
+						</div> 
+					</div>
+				</div>
+			</section>
+
+		</section>
+	</div>
+</div>

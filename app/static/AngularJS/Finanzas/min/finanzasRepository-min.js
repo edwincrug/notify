@@ -1,0 +1,1 @@
+var finanzasUrl=global_settings.urlCORS+"api/finanzasapi/";registrationModule.factory("finanzasRepository",function(n){return{get:function(){return n.get(finanzasUrl+"0-0")},add:function(){return n.post(finanzasUrl)},"delete":function(){return n["delete"](finanzasUrl)},put:function(){return n.put(finanzasUrl)}}});

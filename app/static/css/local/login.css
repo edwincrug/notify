@@ -1,0 +1,173 @@
+/*body {
+	background: #87CAD3;
+}
+
+article
+{
+	
+}	
+
+#content
+{
+	width: 100%;
+}
+
+#login
+{
+	width: 700px;
+	height: 300px;
+	margin-left: calc(50% - 380px);
+	margin-top: 15%;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	padding-right: 20px;
+	padding-left: 0px;
+	background-color: white;
+	position: relative;
+
+}
+
+#logo
+{
+	width: 40%;
+	position: relative;
+	top: -100px;
+	display: inline-block;
+	background-color: #EEEEEE;
+	padding-top: 112px;
+	padding-bottom: 120px;
+
+}
+
+#figLogo{
+	width: 200px;
+}
+
+#boxLogin
+{
+	width: 58%;
+	height: 100%;
+	position: relative;
+	display: inline-block;
+}
+
+.rowHome
+{
+	position: absolute;
+	right: 0;
+}
+
+#texto
+{
+	top: 0;
+	width: 90%;
+	font-size: 23px;
+	color: #404040;
+
+}
+
+#user
+{
+	top: 20%;
+	width: 90%;
+}
+
+#txtUsuario
+{
+	width: 75%;
+	float: right;
+}
+
+#txtPassword
+{
+	width: 75%;
+	float: right;
+}
+
+
+#password
+{
+	top: 45%;
+	width: 90%;
+}
+
+#buttons
+{
+	top: 80%;
+	width: 90%;
+}
+
+#btnSingIn
+{
+	float: right;
+}
+
+.label
+{
+	width: 80px;
+	text-align: right;
+	float: left;
+	font-size: 16px;
+	color: #404040;
+	margin-top: 3px;
+	line-height: 28px;
+}
+
+.primary
+{
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+	background-color: #4376cf;
+	background-image: -webkit-linear-gradient(top, #4376cf 0%, #3558c1 100%);
+	background-image: linear-gradient(to bottom, #4376cf 0%, #3558c1 100%);
+	color: white;
+}
+
+.buttonMain
+{
+	-webkit-background-clip: padding;
+	-moz-background-clip: padding;
+	background-clip: padding-box;
+	border-radius: 2px;
+	min-width: 80px;
+	cursor: pointer;
+	font-size: 1.4em;
+	height: 34px;
+	line-height: 34px;
+	padding: 0 20px;
+	border: 0;
+	margin-bottom: 2px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	box-shadow: inset 0 0 0 1px rgba(151, 151, 151, 0.4);
+
+	-webkit-font-smoothing: subpixel-antialiased;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	white-space: nowrap;
+	font-weight: 300;
+}
+
+.txtLogin
+{
+	outline: none;
+	height: 32px;
+	border: 1px solid #cccccc;
+	padding: 0 8px;
+	background-clip: border-box;
+	border-radius: 2px;
+	transition-property: border;
+	transition-duration: 0.35s;
+	font-size: .9rem;
+	background-color: white;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-appearance: none;
+	width: 100%;
+	vertical-align: middle;
+	color: #686663;
+	font-weight: 400;
+}*/

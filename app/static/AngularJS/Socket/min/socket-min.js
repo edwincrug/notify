@@ -1,0 +1,1 @@
+var socket=io.connect("http://192.168.1.144:3000/");socket.on("mejorandola",function(o){console.log(o),socket.emit("mejorandolo",{hola:"yo tambien soy mejorandolo"})});

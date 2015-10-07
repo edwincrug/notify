@@ -1,0 +1,45 @@
+<link href="css/salaMonitor.css" rel="stylesheet" />
+
+<div cg-busy="myPromise">
+	<div ng-init="init()" ng-style="style()" resize>
+		<section id="header" class="mainContent">
+			<h1 id="titulo"> Monitor de Envíos </h1>
+			<div class="lastUpdate">Última actualización: {{ lastUpdate }} </div>
+		</section>
+		<section id="grid" class="mainContent">
+			<table class="table"> 
+				<thead>
+					<tr>
+						<th>Cliente</th>
+						<th>Hora</th>
+						<th>Remitente</th>
+						<th>Destinatario</th>
+						<th>Paquete</th>
+						<!-- <th>Condiciones</th> -->
+						<th>Lugar</th>
+						<th>Tipo</th>
+						<th>Etapa</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="envio in listaEnviosMonitor" >
+						<td ng-class="{ 'success' : envio.etapa == 2, 'warning' : envio.inicio == 1, 'info' : envio.etapa == 3 }">{{ envio.razonSocial }}</td>
+						<td>{{ envio.hora }}</td>
+						<td>{{ envio.remitente }}</td>
+						<td>{{ envio.destinatario }}</td>
+						<td>{{ envio.material }}</td>
+						<!-- <td>
+							<button type="button" class="btn btn-default glyphicon glyphicon-comment" data-toggle="tooltip" data-placement="top" title="{{ envio.condiciones }}"></button>
+						</td> -->
+						<td>
+							<button type="button" class="btn btn-default glyphicon glyphicon-globe" data-toggle="tooltip" data-placement="top" title="{{ envio.lugar }}"></button>
+						</td>
+						<td>{{ envio.tipo }}</td>
+						<td>{{ envio.stage }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+		
+	</div><!-- Contenedor principal -->
+</div>

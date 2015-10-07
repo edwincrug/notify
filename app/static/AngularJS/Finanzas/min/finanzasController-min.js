@@ -1,0 +1,1 @@
+registrationModule.controller("finanzasController",function(r,o,n,e,a){var i=function(r,o,n,e){a.error("Ocurrio un problema "+r.message)}});

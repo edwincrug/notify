@@ -1,0 +1,33 @@
+/*  Variables */
+.ui-widget-content {
+  background: #ffffff url("images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
+  color: #222222; }
+
+.ui-widget {
+  font-size: 0.9em; }
+
+.ui-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: block;
+  outline: none; }
+
+.ui-autocomplete {
+  position: fixed;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  color: #32435D;
+  background: #EAFAF9;
+  padding-left: 30px;
+  font-weight: 300; }
+
+.ui-autocomplete li:hover {
+  background-color: #DEF0EF; }
+
+.ui-front {
+  z-index: 100; }
+
+.ui-helper-hidden-accessible {
+  display: none; }

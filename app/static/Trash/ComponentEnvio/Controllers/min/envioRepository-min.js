@@ -1,0 +1,1 @@
+var envioUrl=global_settings.urlCORS+"api/envioapi/";envioModule.factory("envioRepository",function(t){return{get:function(n){return t.get(contratoUrl+"0-"+n)},add:function(n){return t.post(contratoUrl,n)},"delete":function(n){return t["delete"](contratoUrl+n.idContrato)},put:function(n,o,r,e){return t.put(contratoUrl+n+"-"+o+"-"+r+"-"+e)}}});

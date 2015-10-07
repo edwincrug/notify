@@ -1,0 +1,105 @@
+﻿<link href="../../css/reportes.css" rel="stylesheet" />
+
+<div cg-busy="myPromise" class="busy">
+    <div ng-init="init()" ng-style="style()" resize>
+        <h1 id="titleTOP"> Reporte de facturas</h1>
+        <div class="contenedor">
+
+            <section class="controles controlesContent">
+                <div class="row">
+                    <div class="col-md-2 label">Desde</div>
+                    <div class="col-md-2">
+                        <p class="input-group">
+                                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt1" is-open="opened1" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open1($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                        </p>
+                    </div>
+                    <div class="col-md-2">Hasta</div>
+                    <div class="col-md-2">
+                        <p class="input-group">
+                                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt2" is-open="opened2" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                        </p>
+                    </div>
+                    <div class="col-md-2">Estatus Factura</div>
+                    <div class="col-md-2">
+                        <div class="btn-group" dropdown is-open="status.isopenClienteTipo">
+                            <button type="button" class="btn btn-primary dropdown-toggle">
+                                {{ labelClienteTipo }}  <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a ng-click="SetClienteTipo(1, $event, 'Vigente')">Vigente</a></li>
+                                <li><a ng-click="SetClienteTipo(0, $event, 'Cancelada')">Cancelada</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row paddingtop20">
+                    <button type="button" class="btn btn-default flotarIzquierda" ng-click="ExportaReporte()" data-loading-text="Procesando..." id="btnProcesa">Expotar Excel</button>
+                    <button type="button" class="btn btn-default flotarIzquierda" ng-click="ProcesaReporte()" data-loading-text="Procesando..." id="btnProcesa">Procesar Reporte</button>
+                </div>
+            </section>
+            <section class="grid">
+                <!--<table class="table table-striped table-condensed table-hover" id="table2excel">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Estatus</th>
+                            <th>Nombre</th>
+                            <th>Ejecutivo</th>
+                            <th>Sucursal</th>
+                            <th>Tipo</th>
+                            <th>Saldo</th>
+                            <th>Inicio</th>
+                            <th>Ver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="cliente in listaClientes">
+                            <td> {{ cliente.cliente }} </td>
+                            <td> {{ cliente.estatus }} </td>
+                            <td> {{ cliente.nombre }} </td>
+                            <td> {{ cliente.ejecutivo }} </td>
+                            <td> {{ cliente.sucursal }} </td>
+                            <td> {{ cliente.tipo }} </td>
+                            <td> {{ cliente.saldo }} </td>
+                            <td> {{ cliente.fechaInicio }} </td>
+                            <td>
+                                <button type="button" class="btn btn-default glyphicon glyphicon-user" data-toggle="tooltip" data-placement="top" title="Ver cliente" ng-click="VerCliente(cliente.cliente);"></button>
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+                </table>-->
+                <!--<div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-10">
+                        </div>
+                        <div class="col-md-2">
+                            <button class=" btn btn-primary" ng-click="exportarXLS()" translate="yes">
+                                Exportar a Excel <span class="glyphicon glyphicon-export"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="marco">
+                    <div class="gridStyle Grid600" ng-grid="gridOptions"></div>
+                </div>
+            </section>
+            <section class="footer">
+                <div class="row paddingtop20">
+                    <!--<button type="button" class="btn btn-default flotarIzquierda" ng-click="ExportarReporte()" data-loading-text="Exportando..." id="btnExportar">Exportar a Excel</button>-->
+                    <button type="button" class="btn btn-default flotarIzquierda" ng-click="Regresar()" data-loading-text="Regresando..." id="btnRegresar">Regresar</button>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+

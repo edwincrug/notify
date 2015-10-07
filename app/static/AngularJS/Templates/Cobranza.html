@@ -1,0 +1,334 @@
+﻿<link href="css/cobranza.css" rel="stylesheet" />
+<div cg-busy="myPromise">
+    <div ng-init="init()" ng-style="style()" resize>
+        <h1 id="title"> {{ cliente.razonSocial }} </h1>
+        <div id="contenido">
+	        <section id="stnNavegacion">
+	        	<div class="full">
+		          <nav class="navbar navbar-default col-md-12" role="navigation">
+					  <div class="container-fluid">
+					    <!-- Brand and toggle get grouped for better mobile display -->
+					    <div class="navbar-header">
+					      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					        <span class="sr-only">Toggle navigation</span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					      </button>
+					      <a class="navbar-brand" href="/">Ver información de cliente</a>
+					    </div>
+					    <!-- Collect the nav links, forms, and other content for toggling -->
+					    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">               
+					      <!--<ul class="nav navbar-nav">
+					        <li><a href="#"> << Anterior </a></li>
+					        <li><a href="#"> Siguiente >> </a></li>
+					      </ul>-->
+                            <ul class="nav navbar-nav navbar-right">
+                                <form class="navbar-form navbar-left" role="search">
+                                    <button class="btn btn-default" ng-click="ReporteClientes()">R-Clientes</button>
+                                    <button class="btn btn-default" ng-click="ReporteFacturas()">R-Facturas</button>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="sFolio" placeholder="Folio">
+                                    </div>
+                                    <button class="btn btn-default" ng-click="BuscarFolio()">ver</button>
+                                </form>
+                            </ul>
+					    </div><!-- /.navbar-collapse -->
+					  </div><!-- /.container-fluid -->
+					</nav>
+				</div>
+	        </section>
+        
+	    	<section id="stnDatos">
+                <div style="text-align: center;"> <span class="label label-info ng-binding">{{  datosCliente.promodescripcion + '  ' +  datosCliente.promovigencia }}</span></div>
+	    		<div class="full">
+	    			<div class="col-md-6">
+	    				<div class="contentRight">
+	    					<label class="labelResumen">Contacto</label> <label class="textoResumen">{{ datosCliente.contacto }}</label>
+	    				</div>	
+	    				<div class="contentRight">
+	    					<label class="labelResumen">Ejecutivo</label> <label class="textoResumen">{{ datosCliente.ejecutivo}}</label>
+	    				</div>	
+	    				<div class="contentRight">
+	    					<label class="labelResumen">Tipo de cliente</label> <label class="textoResumen">{{ datosCliente.tipoCliente }}</label>
+	    				</div>	
+	    				<div class="contentRight">
+	    					<label class="labelResumen">Tipo de persona</label> <label class="textoResumen">{{ datosCliente.tipoPersona }}</label>
+	    				</div>	
+		    			<div class="contentRight">
+		    					<label class="labelResumen">Teléfono</label> <label class="textoResumen"> {{ datosCliente.telefono }}</label>
+						</div>	
+	    				
+	    				<div class="contentRight">
+		    					<label class="labelResumen">Domicilio</label> <label class="textoResumen">{{ datosCliente.direccion }}</label>
+		    			</div>
+	    				<div class="contentRight">
+		    					<label class="labelResumen">Email</label> <label class="textoResumen">{{ datosCliente.mail }}</label>
+		    			</div>
+	    			</div>
+	    			<div class="col-md-6">
+	    				<div id="balance">
+	    					<div class="row">
+	    						<div class="col-md-6">
+	    							<div class="row">Total por cobrar:</div>
+	    							<div class="row" id="balanceCobrar">{{ datosCliente.saldo | currency:"$" }}</div>
+	    						</div>
+	    						<div class="col-md-6" id="balanceDesgloce">
+	    							<div class="row">
+	    								<label class="textoResumen">Vencidas:</label> <label class="labelResumen"> {{ datosCliente.vencidas | currency:"$" }}</label>
+	    							</div>
+	    							<div class="row">
+	    								<label class="textoResumen">NO vencidas:</label> <label class="labelResumen"> {{ datosCliente.noVencidas | currency:"$" }}</label>
+	    							</div>
+	    						</div>
+	    					</div>
+	    				</div>
+	    			</div>
+	    		</div>
+	        </section>
+	        <section id="stnFacturas">
+	        	  <div class="full">
+                    <div class="col-lg-12 cuentaControles">
+                        <div class="btn-group" dropdown is-open="status.isopen">
+                            <button type="button" class="btn btn-primary dropdown-toggle">
+                                Seleccione una opción <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a ng-click="toggleSemana($event)">Último mes</a></li>
+                                <li><a ng-click="toggleMes($event)">Último bimestre</a></li>
+                                <li class="divider"></li>
+                                <li><a ng-click="toggleHoy($event)">Último semestre</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                     <!--<div class="col-lg-1">
+                     	  <div class="form-group">
+						          <input type="text" class="form-control" id="folio" placeholder="Introduzca folio">
+						</div>
+                     </div>
+  				     <div class="col-lg-1">
+  				     	 <button class="btn btn-default">Buscar</button>
+                     </div>-->
+  				 </div>
+	        	 <table class="table table-striped table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Referencia</th>
+                                <th>Cargo</th>
+                                <th>Abono</th>
+                                <th>Acciones</th>
+                                <!--<th style="width:80px;"></th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="cuenta in listaFacturas">
+                                <td> {{ cuenta.fecha }} </td>
+                                <td> {{ cuenta.referencia }} </td>
+                                <td> {{ cuenta.cargo | currency:"$" }} </td>
+                                <td> {{ cuenta.abono | currency:"$" }} </td>
+                                <td>
+                                    <button type="button" class="btn btn-default glyphicon glyphicon-file" data-toggle="tooltip" data-placement="top" title="Factura" ng-hide="cuenta.idMovimiento == 2" ng-click="AbrirCuenta(cuenta.ruta);"></button>
+                                    <button type="button" class="btn btn-default glyphicon glyphicon-paperclip" data-toggle="tooltip" data-placement="top" title="Archivo XML" ng-hide="cuenta.idMovimiento == 2" ng-click="AbrirCuenta(cuenta.rutaXML);"></button>
+                                    <button type="button" class="btn btn-default glyphicon glyphicon-minus-sign" data-toggle="tooltip" data-placement="top" title="Cancelar" ng-click="CancelarCuenta(cuenta.idCuenta, cuenta.idMovimiento)"></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+	        </section>
+	        <section id="stnControles">
+                <button class="btn btn-default" ng-click="EmitirFactura()">Emitir Factura</button>
+                <button class="btn btn-default" ng-click="Promocion()">Agregar Promoción</button>
+	        	<button class="btn btn-default" ng-click="MostrarPago()">Procesar Pago</button>
+	        </section>
+            <br />
+            <br />
+        </div>
+    </div>
+</div>
+
+<!--Modal captura pago-->
+<div id="newPago" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Cerrar</span></button>
+                <h3 class="modal-title modalCenterTitle" id="myModalLabel"> Nuevo pago </h3>
+            </div>
+            <div class="modal-body">
+                <h4 class="control-label">De: zenttre</h4>
+                <h4 class="control-label">Para: {{ cliente.razonSocial }} </h4>
+                <br />
+                <div class="form-group">
+                    <label for="inputApellido" class="col-lg-3 control-label">Fecha</label>
+                    <div class="col-lg-9">
+                        <p class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="inputApellido" class="col-lg-3 control-label">Referencia</label>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" ng-model="pagoReferencia" placeholder="Referencia del movimiento">
+                    </div>
+
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="inputApellido" class="col-lg-3 control-label">Monto</label>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" ng-model="pagoMonto" placeholder="Monto exacto del pago">
+                    </div>
+
+                </div>
+                <br />
+
+                <div class="form-group">
+                    <label for="inputApellido" class="col-lg-3 control-label"></label>
+                    <div class="col-lg-9">
+
+                         <div class="input-group">
+                          <span class="input-group-addon">
+                            <input type="checkbox" aria-label="..." ng-model="recibo">
+                          </span>
+                          <input type="text" class="form-control" aria-label="..." value="Emitir Recibo" disabled>
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="ProcesarPago()" data-loading-text="Procesando..." id="btnProcesarPago">Procesar</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
+<!--Modal captura de promoción-->
+<div id="newPromocion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Cerrar</span></button>
+                <h3 class="modal-title modalCenterTitle" id="myModalLabel"> Agregar Promoción </h3>
+            </div>
+            <div class="modal-body">
+                <h4 class="control-label">De: zenttre</h4>
+                <h4 class="control-label">Para: {{ cliente.razonSocial }} </h4>
+                <div class="form-group">
+                    <label class="col-lg-4 control-label"> Promoción </label>
+                    <div class="col-lg-8">
+                        <div class="gridStyle" ng-grid="gridOptions"></div>
+                       <!--  <div class="btn-group" dropdown is-open="status.isopenPromocion">
+                            <button type="button" class="btn btn-primary dropdown-toggle">
+                                {{ labelPromocion }}  <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a ng-click="SetPromocion(3, $event, 'Promoción 9x12')">Promoción 9x12</a></li>
+                                <li><a ng-click="SetPromocion(4,$event, 'Promoción 8x12')">Promoción 8x12</a></li>
+                                <li><a ng-click="SetPromocion(5,$event, 'Promoción 8x12')">Promoción 3 meses por adelantado</a></li>
+                                <li><a ng-click="SetPromocion(7,$event, 'Promoción 8x12')">Promoción 6 meses por adelantado</a></li>
+                                <li><a ng-click="SetPromocion(8,$event, 'Promoción 8x12')">Promoción 12 meses por adelantado</a></li>
+                            </ul>
+                        </div> -->
+                    </div>
+                </div>
+                <hr />
+                <br />
+                <br />
+                <div class="form-group">
+                    <label class="col-lg-4 control-label"> Forma de Pago</label>
+                    <div class="col-lg-8">
+                        <div class="btn-group" dropdown is-open="status.isopenFormaDePago">
+                            <button type="button" class="btn btn-primary dropdown-toggle">
+                                {{ labelFormaDePago }}  <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a ng-click="SetPago( 1, $event, 'No identificado')">No identificado</a></li>
+                                <li><a ng-click="SetPago(2,$event, 'Transferencia')">Transferencia</a></li>
+                                <li><a ng-click="SetPago(3,$event, 'Cheque')">Cheque</a></li>
+                                <li><a ng-click="SetPago(4,$event, 'Tarjeta de débito')">Tarjeta de débito</a></li>
+                                <li><a ng-click="SetPago(5,$event, 'Efectivo')">Efectivo</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="form-group">
+                    <label class="col-lg-4 control-label"> Cuenta</label>
+                    <div class="col-lg-8">
+                        <input type="text" ng-model="cuentaDePago" class="form-control"  disabled />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Desde</label>
+                    <div class="col-lg-8">
+                        <p class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dtPromoDesde" is-open="openedPromoDesde" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Cerrar" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="openPromoDesde($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Hasta</label>
+                    <div class="col-lg-8">
+                        <p class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dtPromoHasta" is-open="openedPromoHasta" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Cerrar" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="openPromoHasta($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+
+                </div>
+                <br />
+                <br />
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="ProcesarPromocion()" data-loading-text="Procesando..." id="btnProcesaPromocion">Procesar Factura</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<!-- Modal de cancelación de factura-->
+<div class="modal fade" id="showCancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Cerrar</span></button>
+                <h3 class="modal-title modalCenterTitle" id="myModalLabel"> Cancelación de Factura </h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                     <label class="col-lg-4 control-label"> Motivo</label>
+                    <div class="col-lg-8">
+                        <textarea rows="2" class="form-control" ng-model="motivoCancelacion" placeholder="Introduzca el motivo de la cancelación" ></textarea>
+                    </div>
+                    
+                </div>
+                <br>
+                <br>
+            </div>
+            <div class="modal-footer">
+                 <button type="button" class="btn btn-primary flotarIzquierda" ng-click="ConfirmarCancelar()" data-loading-text="Cancelando..." id="btnCancelarFactura">Cancelar Factura</button>
+            </div>
+        </div>
+    </div>
+</div>

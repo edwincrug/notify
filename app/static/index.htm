@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> 
+<html class="no-js" lang="es"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Libreria de Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900italic' rel='stylesheet' type='text/css'>
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- Hojas de estilo internas -->
+    <!-- ____________________________________________________________ -->
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/body.css" rel="stylesheet" />
+    <link href="css/buttons.css" rel="stylesheet" />
+    <link href="css/inbox.css" rel="stylesheet" />
+    <link href="css/login.css" rel="stylesheet" />
+    <link href="css/chat.css" rel="stylesheet" />
+
+    <!-- Modales -->
+    <link href="css/modal/component.css" rel="stylesheet" />
+
+    <!--Slides-->
+    <link href="css/slides.css" rel="stylesheet" />
+    <!--JQuery Autocomplete-->
+    <link href="css/autocomplete.css" rel="stylesheet" />
+
+    <!--Search-->
+    <link href="css/search/component.css" rel="stylesheet" />
+
+    <!--Loading-->
+    <link href="css/toastr.css" rel="stylesheet" />
+    <link href="css/angular-busy.css" rel="stylesheet" />
+
+    <!-- NG Grid -->
+    <link href="css/ng-grid.css" rel="stylesheet" />
+    <link href="css/gridHeight.css" rel="stylesheet" />
+
+    <!--Validacion-->
+    <link href="css/validation.css" rel="stylesheet" />
+
+    <!--Librearias JQuery y Bootstrap-->
+    <script src="js/notify/modernizr.custom.js"></script>
+
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/jquery-ui-1.11.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+    <script type="text/javascript" src="http://www.skypeassets.com/i/scom/js/skype-uri.js"></script>
+    <!-- Start of edwin Zendesk Widget script -->
+    <script>/*<![CDATA[*/window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(c){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var o=this.createElement("script");n&&(this.domain=n),o.id="js-iframe-async",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write('<body onload="document._l();">'),o.close()}("https://assets.zendesk.com/embeddable_framework/main.js","edwin.zendesk.com");/*]]>*/</script>
+    <!-- End of edwin Zendesk Widget script -->
+    
+</head>
+<body class="cbp-spmenu-push" ng-app="registrationModule">
+   <!--      [if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            <![endif] -->
+
+            <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+                <h3>Menu Principal</h3>
+                <a id="inicio" href="/home"><img src="images/nav/home.png"> <span>Inicio</span></a>
+                <a id="cliente" href="/"><img src="images/nav/customer.png"> <span>Clientes</span></a>
+                <a  id="inventario" href="/inventario"><img src="images/nav/inventory.png"> <span>Inventario</span></a>
+                <a  id="proveedor" href="/proveedor"><img src="images/nav/vendors.png">Proveedores<span></span></a>
+                <a id="cobranza" href="/cobranza"><img src="images/nav/tax.png">Cobranza<span></span></a>
+                <a id="empleado" href="/empleado"><img src="images/nav/employee.png">Empleados<span></span></a>
+                <a  id="reporte" href="/reporte"><img src="images/nav/reports.png">Reportes<span></span></a>
+            </nav>
+            <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2" ng-controller="rightPanelController">
+                <h3>Configuración</h3>
+                <a id="adm" href="/administracion">Administración</a>
+                <a id="perfil" href="/perfil">Mi perfil</a>
+                <a class="md-trigger" data-modal="modal-12" id="exit" ng-click="Exit()">Salir</a>
+                <!--  -->
+            </nav>
+            <div class="la-anim-10"></div>
+            <div class="md-modal md-effect-12" id="modal-12" ng-controller="clienteController">
+                <div class="md-content" id="contentLogin">
+                    <div id="logoLogin">
+                        <img id="figLogo">
+                    </div>
+                    <div id="boxLogin">
+
+                        <div id="texto" class="rowHome">
+                            Inicie Sesión
+                        </div>
+                        <div id="user" class="rowHome">
+                            <div class="col-md-4"><label for="txtUsuario" class="label labelLogin">Usuario</label></div>
+                            <div class="col-md-8"><input type="text" id="txtUsuario" ng-model="usuario" class="txtLogin" /></div>
+                        </div>
+                        <div id="password" class="rowHome">
+                            <div class="col-md-4"><label for="txtPassword" class="label labelLogin">Password</label></div>
+                            <div class="col-md-8"><input type="password" id="txtPassword" ng-model="password" class="txtLogin" /></div>
+                        </div>
+                        <div id="buttons" class="rowHome">
+                            <button type="button" class="btn btn-primary" ng-click="Iniciar()" data-loading-text="Verificando..." id="btnSingIn">Iniciar</button>
+                        </div>
+                        <div id="imageDiv"></div>
+                    </div>
+
+                    <button class="md-close" id="login" style="display:none;"></button>
+                </div>
+            </div>
+
+            <div class="md-overlay" id="overlayLogon"></div>
+            <header ng-controller="headerController" >
+                <div ng-init="init()">
+                <div class="mainHeader">
+                    <img id="showLeftPush" class="controls" title="Menú General" data-toggle="tooltip" data-placement="bottom" title="Menú" src="images/nav/aux1.png"/>
+                    <img id="logo" />
+                </div>
+                <nav>
+                    <ul>
+                         <li><a href="/home"><img src="images/nav/homePanel.png" data-toggle="tooltip" data-placement="bottom" title="Home"></a></li>
+                       <li><a href="/"><img src="images/nav/face.png" data-toggle="tooltip" data-placement="bottom" title="Clientes"></a></li>
+                       <li><a href="/salaSearch"><img src="images/nav/nota.png" data-toggle="tooltip" data-placement="bottom" title="Reservaciones para hoy"></a></li>
+                       
+                       <li><a href="/salaMonitor"><img src="images/nav/calendar2.png" data-toggle="tooltip" data-placement="bottom" title="Monitor de Salas"></a></li>
+                   <li><a href="/envioMonitor"><img src="images/nav/check.png" data-toggle="tooltip" data-placement="bottom" title="Monitor de Envíos"></a></li>
+                   </ul>
+               </nav>
+               <div id="name"> {{ empleado.nombre + ' ' + empleado.apellidoPaterno }}</div>
+               <figure id="avatar">
+                <img src="images/profile/man.jpg">
+            </figure>
+            <img id="reload" class="controls" title="{{  ultimaCarga  }}" ng-click="Reload()" src="images/nav/reload.png"/>
+            <img id="showRightPush" class="controls" data-toggle="tooltip" data-placement="bottom" title="Menú" src="images/nav/auxhuv.png"/>
+            <div id="sb-search" class="sb-search" data-toggle="tooltip" data-placement="bottom" title="Buscar persona por nombre">
+                <form>
+                    <input class="sb-search-input" placeholder="Introduzca un nombre..." type="search" name="search" id="search" ng-model="searchy" ng-click="Cleary()">
+                    <input class="sb-search-submit" type="submit" value="">
+                    <span class="sb-icon-search"></span>
+                </form>
+            </div>
+            </div>
+        </header>
+        <section id="content">
+            <div ng-view></div>
+            <button class="md-trigger" data-modal="modal-12" id="logon"  style="display:none"></button> 
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="viewChat">
+            <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <h4 class="modal-title" id="mySmallModalLabel">Usuarios Conectados</h4>
+                </div>
+                <div class="modal-body">
+                  <table class="table table-striped table-condensed table-hover">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div ng-class="{ 'chatDesconectado': estatus1 == 0, 'chatEnLinea': estatus1 == 1, 'chatAusente': estatus1 == 2, 'chatOcupado': estatus1 == 3 }"></div>
+                                </td>
+                                <td>
+                                    <img class="chatAvatarUser" src="{{ imagen1 }}"/> <div class="chatName"> {{ nombre1 }} </div>
+                                </td>
+                                <td>
+                                    <div id="SkypeButton_Call_edwincrug_1" class="chatButton">
+                                        <script type="text/javascript">
+                                            Skype.ui({
+                                                "name": "chat",
+                                                "element": "SkypeButton_Call_edwincrug_1",
+                                                "participants": ["edwincrug"],
+                                                "imageSize": 24,
+                                                "topic": "Nuevo Chat"
+                                            });
+                                        </script>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div ng-class="{ 'chatDesconectado': estatus2 == 0, 'chatEnLinea': estatus2 == 1, 'chatAusente': estatus2 == 2, 'chatOcupado': estatus2 == 3 }"></div>
+                                </td>
+                                <td>
+                                    <img class="chatAvatarUser" src="{{ imagen2 }}"/> <div class="chatName"> {{ nombre2 }} </div>
+                                </td>
+                                <td>
+                                    <div id="SkypeButton_Call_michell1631_1" class="chatButton">
+                                        <script type="text/javascript">
+                                            Skype.ui({
+                                                "name": "chat",
+                                                "element": "SkypeButton_Call_michell1631_1",
+                                                "participants": ["michell1631"],
+                                                "imageSize": 24,
+                                                "topic": "Nuevo Chat"
+                                            });
+                                        </script>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div ng-class="{ 'chatDesconectado': estatus6 == 0, 'chatEnLinea': estatus6 == 1, 'chatAusente': estatus6 == 2, 'chatOcupado': estatus6 == 3 }"></div>
+                                </td>
+                                <td>
+                                    <img class="chatAvatarUser" src="{{ imagen6 }}"/> <div class="chatName"> {{ nombre6 }} </div>
+                                </td>
+                                <td>
+                                    <div id="SkypeButton_Call_deya1128_1" class="chatButton">
+                                        <script type="text/javascript">
+                                            Skype.ui({
+                                                "name": "chat",
+                                                "element": "SkypeButton_Call_deya1128_1",
+                                                "participants": ["deya1128"],
+                                                "imageSize": 24,
+                                                "topic": "Nuevo Chat"
+                                            });
+                                        </script>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div ng-class="{ 'chatDesconectado': estatus8 == 0, 'chatEnLinea': estatus8 == 1, 'chatAusente': estatus8 == 2, 'chatOcupado': estatus8 == 3 }"></div>
+                                </td>
+                                <td>
+                                    <img class="chatAvatarUser" src="{{ imagen8 }}"/> <div class="chatName"> {{ nombre8 }} </div>
+                                </td>
+                                <td>
+                                    <div id="SkypeButton_Call_letycobranza2_1" class="chatButton">
+                                        <script type="text/javascript">
+                                            Skype.ui({
+                                                "name": "chat",
+                                                "element": "SkypeButton_Call_letycobranza2_1",
+                                                "participants": ["letycobranza2"],
+                                                "imageSize": 24,
+                                                "topic": "Nuevo Chat"
+                                            });
+                                        </script>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div ng-class="{ 'chatDesconectado': estatus9 == 0, 'chatEnLinea': estatus9 == 1, 'chatAusente': estatus9 == 2, 'chatOcupado': estatus9 == 3 }"></div>
+                                </td>
+                                <td>
+                                    <img class="chatAvatarUser" src="{{ imagen9 }}"/> <div class="chatName"> {{ nombre9 }} </div>
+                                </td>
+                                <td>
+                                    <div id="SkypeButton_Call_adrian.abrego0817_1" class="chatButton">
+                                        <script type="text/javascript">
+                                            Skype.ui({
+                                                "name": "chat",
+                                                "element": "SkypeButton_Call_adrian.abrego0817_1",
+                                                "participants": ["adrian.abrego0817"],
+                                                "imageSize": 24,
+                                                "topic": "Nuevo Chat"
+                                            });
+                                        </script>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div ng-class="{ 'chatDesconectado': estatus11 == 0, 'chatEnLinea': estatus11 == 1, 'chatAusente': estatus11 == 2, 'chatOcupado': estatus11 == 3 }"></div>
+                                </td>
+                                <td>
+                                    <img class="chatAvatarUser" src="{{ imagen11 }}"/> <div class="chatName"> {{ nombre11 }} </div>
+                                </td>
+                                <td>
+                                    <div id="SkypeButton_Call_lizbeth.hernandez531_1" class="chatButton">
+                                        <script type="text/javascript">
+                                            Skype.ui({
+                                                "name": "chat",
+                                                "element": "SkypeButton_Call_lizbeth.hernandez531_1",
+                                                "participants": ["lizbeth.hernandez531"],
+                                                "imageSize": 24,
+                                                "topic": "Nuevo Chat"
+                                            });
+                                        </script>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div ng-class="{ 'chatDesconectado': estatus12 == 0, 'chatEnLinea': estatus12 == 1, 'chatAusente': estatus12 == 2, 'chatOcupado': estatus12 == 3 }"></div>
+                                </td>
+                                <td>
+                                    <img class="chatAvatarUser" src="{{ imagen12 }}"/> <div class="chatName"> {{ nombre12 }} </div>
+                                </td>
+                                <td>
+                                    <div id="SkypeButton_Call_mafer0081_1">
+                                      <script type="text/javascript">
+                                        Skype.ui({
+                                          "name": "chat",
+                                          "element": "SkypeButton_Call_mafer0081_1",
+                                          "participants": ["mafer0081"],
+                                          "imageSize": 24
+                                        });
+                                      </script>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div ng-class="{ 'chatDesconectado': estatus15 == 0, 'chatEnLinea': estatus15 == 1, 'chatAusente': estatus15 == 2, 'chatOcupado': estatus15 == 3 }"></div>
+                                </td>
+                                <td>
+                                    <img class="chatAvatarUser" src="{{ imagen15 }}"/> <div class="chatName"> {{ nombre15 }} </div>
+                                </td>
+                                <td>
+                                    <div id="SkypeButton_Call_rafa_espino_zenttre_1" class="chatButton">
+                                        <script type="text/javascript">
+                                            Skype.ui({
+                                                "name": "chat",
+                                                "element": "SkypeButton_Call_rafa_espino_zenttre_1",
+                                                "participants": ["rafa_espino_zenttre"],
+                                                "imageSize": 24,
+                                                "topic": "Nuevo Chat"
+                                            });
+                                        </script>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div ng-class="{ 'chatDesconectado': estatus17 == 0, 'chatEnLinea': estatus17 == 1, 'chatAusente': estatus17 == 2, 'chatOcupado': estatus17 == 3 }"></div>
+                                </td>
+                                <td>
+                                    <img class="chatAvatarUser" src="{{ imagen17 }}"/> <div class="chatName"> {{ nombre17 }} </div>
+                                </td>
+                                <td>
+                                    <div id="SkypeButton_Call_susss28_1" class="chatButton">
+                                        <script type="text/javascript">
+                                            Skype.ui({
+                                                "name": "chat",
+                                                "element": "SkypeButton_Call_susss28_1",
+                                                "participants": ["susss28"],
+                                                "imageSize": 24,
+                                                "topic": "Nuevo Chat"
+                                            });
+                                        </script>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div ng-class="{ 'chatDesconectado': estatus18 == 0, 'chatEnLinea': estatus18 == 1, 'chatAusente': estatus18 == 2, 'chatOcupado': estatus18 == 3 }"></div>
+                                </td>
+                                <td>
+                                    <img class="chatAvatarUser" src="{{ imagen18 }}"/> <div class="chatName"> {{ nombre18 }} </div>
+                                </td>
+                                <td>
+                                    <div id="SkypeButton_Call_csr_rdz_1" class="chatButton">
+                                        <script type="text/javascript">
+                                            Skype.ui({
+                                                "name": "chat",
+                                                "element": "SkypeButton_Call_csr_rdz_1",
+                                                "participants": ["csr_rdz"],
+                                                "imageSize": 24,
+                                                "topic": "Nuevo Chat"
+                                            });
+                                        </script>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog --> 
+        </div>
+            <div id="chat" class="btn-success" ng-controller="sesionController" ng-click="ShowChat()">
+               <img id="chatAvatar" src="images/profile/man.jpg" />
+               <span id="chatText">En línea</span>
+            </div>  
+        </section>
+
+         <!-- SocketIO         <script src="js/socket.io.js"></script>
+         <script src="AngularJS/Socket/socket.js"></script>-->
+
+
+         <!--Interface de usuario-->
+         <script src="js/toastr.js"></script>
+         <script src="js/plugins/jquery.formatCurrency-1.4.0.js"></script>
+
+         <!--Librerias de Salas-->
+         <script src="js/moment.min.js"></script>
+         <script src="js/fullcalendar.js"></script>
+
+         <!-- Librerias Angular-->
+         <script src="js/angular.js"></script>
+         <script src="js/angular-route.js"></script>
+         <script src="js/angular-ui/ui-bootstrap-tpls.js"></script>
+         <script src="js/angular-local-storage.min.js"></script>
+
+         <!--Funciones Comunes-->
+         <script src="AngularJS/common.js"></script>
+         <script src="js/general/tooltips.js"></script>
+
+         <!--Angular NG-Grid-->
+         <script src="js/ng-grid.js"></script>
+
+         <!--Angular Busy-->
+         <script src="js/angular-busy.js"></script>
+
+         <!--Librería para realizar querys-->
+         <script src="js/linq.js"></script>
+         <!--Librería para exportar a excel-->
+         <script src="js/jquery.table2excel.js"></script>
+
+         <!--Librerias de aplicación angular-->
+         <script src="confront.js"></script>
+         <script src="AngularJS/RegistrationModule.js"></script>
+
+         <!--Entidades-->
+         <script src="Entity/Salas.js"></script>
+         <script src="Entity/Envio.js"></script>
+         <script src="Entity/Sala.js"></script>
+         <script src="Entity/Cliente.js"></script>
+         <script src="Entity/Publicacion.js"></script>
+
+         <!--librerias de componenetes-->
+         <script src="AngularJS/notificationFactory.js"></script>
+
+         <!--Header-->
+         <script src="AngularJS/Global/headerController.js"></script>
+         <script src="AngularJS/Global/rightPanelController.js"></script>
+
+         <!--Controladores-->
+         <script src="AngularJS/Finanzas/finanzasRepository.js"></script>
+         <script src="AngularJS/Finanzas/finanzasController.js"></script>
+         <script src="AngularJS/Perfil/perfilRepository.js"></script>
+         <script src="AngularJS/Perfil/perfilController.js"></script>
+         <script src="AngularJS/Administracion/administracionRepository.js"></script>
+         <script src="AngularJS/Administracion/administracionController.js"></script>
+         <script src="AngularJS/Proveedor/ordenCompraRepository.js"></script>
+         <script src="AngularJS/Proveedor/cuentaPorPagarRepository.js"></script>
+         <script src="AngularJS/Proveedor/proveedorRepository.js"></script>
+         <script src="AngularJS/Proveedor/proveedorController.js"></script>
+         <script src="AngularJS/Inventario/inventarioRepository.js"></script>
+         <script src="AngularJS/Inventario/inventarioController.js"></script>
+         <script src="AngularJS/Empleado/empleadoRepository.js"></script>
+         <script src="AngularJS/Empleado/empleadoController.js"></script>
+         <script src="AngularJS/Agenda/agendaRepository.js"></script>
+         <script src="AngularJS/Agenda/agendaController.js"></script>
+         <script src="AngularJS/Recordatorio/recordatorioRepository.js"></script>
+         <script src="AngularJS/Recordatorio/recordatorioController.js"></script>
+         <script src="AngularJS/Bitacora/bitacoraRepository.js"></script>
+         <script src="AngularJS/Bitacora/bitacoraController.js"></script>
+         <script src="AngularJS/Sesion/sesionRepository.js"></script>
+         <script src="AngularJS/Sesion/sesionController.js"></script>
+         <script src="AngularJS/Autorizacion/autorizacionRepository.js"></script>
+         <script src="AngularJS/Autorizacion/autorizacionController.js"></script>
+         <script src="AngularJS/LE/LERepository.js"></script>
+         <script src="AngularJS/LE/LEController.js"></script>
+         <script src="AngularJS/Oficina/oficinaRepository.js"></script>
+         <script src="AngularJS/Oficina/oficinaController.js"></script>
+         <script src="AngularJS/Contacto/contactoRepository.js"></script>
+         <script src="AngularJS/Direccion/direccionRepository.js"></script>
+         <script src="AngularJS/Servicio/servicioRepository.js"></script>
+         <script src="AngularJS/Reporte/reporteRepository.js"></script>
+         <script src="AngularJS/Reporte/reporteController.js"></script>
+         <script src="AngularJS/Reporte/clienteReporteController.js"></script>
+         <script src="AngularJS/Reporte/facturaReporteController.js"></script>
+         <script src="AngularJS/Correo/correoRepository.js"></script>
+         <script src="AngularJS/Correo/correoController.js"></script>
+         <script src="AngularJS/Correspondencia/correspondenciaRepository.js"></script>
+         <script src="AngularJS/Correspondencia/correspondenciaController.js"></script>
+         <script src="AngularJS/Sala/salaRepository.js"></script>
+         <script src="AngularJS/Sala/salaController.js"></script>
+         <script src="AngularJS/Sala/solosController.js"></script>
+         <script src="AngularJS/Sala/salaMainController.js"></script>
+         <script src="AngularJS/Sala/salaSearchController.js"></script>
+         <script src="AngularJS/Sala/salaMonitorController.js"></script>
+         <script src="AngularJS/Envio/envioListController.js"></script>
+         <script src="AngularJS/Envio/envioSignController.js"></script>
+         <script src="AngularJS/Envio/envioSearchController.js"></script>
+         <script src="AngularJS/Envio/envioMainController.js"></script>
+         <script src="AngularJS/Envio/envioMonitorController.js"></script>
+         <script src="AngularJS/Envio/envioRepository.js"></script>
+         <script src="AngularJS/Envio/envioController.js"></script>
+         <script src="AngularJS/Consumo/consumoRepository.js"></script>
+         <script src="AngularJS/Consumo/consumoController.js"></script>
+         <script src="AngularJS/Factura/facturaRepository.js"></script>
+         <script src="AngularJS/Factura/facturaController.js"></script>
+         <script src="AngularJS/Cobranza/cobranzaRepository.js"></script>
+         <script src="AngularJS/Cobranza/cobranzaController.js"></script>
+         <script src="AngularJS/Contrato/contratoController.js"></script>
+         <script src="AngularJS/Contrato/contratoRepository.js"></script>
+         <script src="AngularJS/Cliente/ClienteRepository.js"></script>
+         <script src="AngularJS/Cliente/ClienteController.js"></script>
+         <script src="AngularJS/login/loginRepository.js"></script>
+         <script src="AngularJS/login/loginController.js"></script>
+         <script src="AngularJS/Home/homeRepository.js"></script>
+         <script src="AngularJS/Home/homeController.js"></script>
+
+         <!--Librerias de MasterPage-->
+         <script src="js/modal/classie.js"></script>
+         <script src="js/modal/modalEffects.js"></script>
+         <script src="js/search/uisearch.js"></script>
+
+
+
+         <script>
+            new UISearch(document.getElementById('sb-search'));
+            //Habilitamos PopOver del chat
+            $('#chat').popover();
+         </script>
+
+         <script>
+         var menuLeft = document.getElementById('cbp-spmenu-s1'),
+         menuRight = document.getElementById('cbp-spmenu-s2'),
+         showLeftPush = document.getElementById('showLeftPush'),
+         showRightPush = document.getElementById('showRightPush'),
+         showAdm = document.getElementById('adm'),
+         showPerfil = document.getElementById('perfil'),
+         showExit = document.getElementById('exit'),
+         showCliente = document.getElementById('cliente'),
+         showCobranza = document.getElementById('cobranza'),
+         showEmpleado = document.getElementById('empleado'),
+         showInicio = document.getElementById('inicio'),
+         showProveedor = document.getElementById('proveedor'),
+         showInventario = document.getElementById('inventario'),
+         showReporte = document.getElementById('reporte'),
+         body = document.body;
+
+         showLeftPush.onclick = function () {
+            classie.toggle(this, 'active');
+            classie.toggle(body, 'cbp-spmenu-push-toright');
+            classie.toggle(menuLeft, 'cbp-spmenu-open');
+            disableOther('showLeftPush');
+        };
+
+        showCliente.onclick = function () {
+            classie.toggle(this, 'active');
+            classie.toggle(body, 'cbp-spmenu-push-toright');
+            classie.toggle(menuLeft, 'cbp-spmenu-open');
+            disableOther('showLeftPush');
+
+        };
+
+        showCobranza.onclick = function () {
+            classie.toggle(this, 'active');
+            classie.toggle(body, 'cbp-spmenu-push-toright');
+            classie.toggle(menuLeft, 'cbp-spmenu-open');
+            disableOther('showLeftPush');
+
+        };
+
+        showEmpleado.onclick = function () {
+            classie.toggle(this, 'active');
+            classie.toggle(body, 'cbp-spmenu-push-toright');
+            classie.toggle(menuLeft, 'cbp-spmenu-open');
+            disableOther('showLeftPush');
+
+        };
+
+        showInicio.onclick = function () {
+            classie.toggle(this, 'active');
+            classie.toggle(body, 'cbp-spmenu-push-toright');
+            classie.toggle(menuLeft, 'cbp-spmenu-open');
+            disableOther('showLeftPush');
+
+        };
+        
+        showProveedor.onclick = function () {
+            classie.toggle(this, 'active');
+            classie.toggle(body, 'cbp-spmenu-push-toright');
+            classie.toggle(menuLeft, 'cbp-spmenu-open');
+            disableOther('showLeftPush');
+
+        };
+        
+        showInventario.onclick = function () {
+            classie.toggle(this, 'active');
+            classie.toggle(body, 'cbp-spmenu-push-toright');
+            classie.toggle(menuLeft, 'cbp-spmenu-open');
+            disableOther('showLeftPush');
+
+        };
+        
+        showReporte.onclick = function () {
+            classie.toggle(this, 'active');
+            classie.toggle(body, 'cbp-spmenu-push-toright');
+            classie.toggle(menuLeft, 'cbp-spmenu-open');
+            disableOther('showLeftPush');
+
+        };
+
+        showRightPush.onclick = function () {
+            classie.toggle(this, 'active');
+            classie.toggle(body, 'cbp-spmenu-push-toleft');
+            classie.toggle(menuRight, 'cbp-spmenu-open');
+            disableOther('showRightPush');
+        };
+
+        showAdm.onclick = function () {
+            classie.toggle(this, 'active');
+            classie.toggle(body, 'cbp-spmenu-push-toleft');
+            classie.toggle(menuRight, 'cbp-spmenu-open');
+            disableOther('showRightPush');
+
+        };
+
+        showPerfil.onclick = function () {
+            classie.toggle(this, 'active');
+            classie.toggle(body, 'cbp-spmenu-push-toleft');
+            classie.toggle(menuRight, 'cbp-spmenu-open');
+            disableOther('showRightPush');
+
+        };
+
+        showExit.onclick = function () {
+            classie.toggle(this, 'active');
+            classie.toggle(body, 'cbp-spmenu-push-toleft');
+            classie.toggle(menuRight, 'cbp-spmenu-open');
+            disableOther('showRightPush');
+
+        };
+
+
+
+        function disableOther(button) {
+            if (button !== 'showLeftPush') {
+                classie.toggle(showLeftPush, 'disabled');
+            }
+            if (button !== 'showRightPush') {
+                classie.toggle(showRightPush, 'disabled');
+            }
+        }
+        </script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            /*(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+ga('create','UA-XXXXX-X');ga('send','pageview');*/
+</script>
+
+
+</body>
+</html>

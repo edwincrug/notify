@@ -1,0 +1,275 @@
+<link href="css/salaMonitor.css" rel="stylesheet" />
+
+<div cg-busy="myPromise">
+	<div ng-init="init()" ng-style="style()" resize>
+
+		<section id="header" class="mainContent">
+			<h1 id="titulo"> Monitor de Salas </h1>
+			<div class="lastUpdate">Última actualización: {{ lastUpdate }} </div>
+		</section>
+		<section id="footer" class="mainContent">
+			<br>
+			<div collapse="isCollapsed">
+				<div class="well well-lg">
+					<div class="row">
+						<label id="cliente" class="control-label">
+							{{ cierreCliente }}
+						</label>
+					</div>
+					<div class="row">
+						<div class="col-md-5">
+							<br>
+							<div class="row">
+								<label class="col-lg-3 control-label">Hora Inicio</label>
+								<label class="col-lg-3 control-label">{{ cierreInicio }}</label>
+
+							</div>
+							<div class="row">
+								<label class="col-lg-3 control-label">Hora Fin</label>
+								<label class="col-lg-3 control-label">{{ cierreFin }}</label>
+
+							</div>
+							<div class="row">
+								<label class="col-lg-3 control-label">Hora Salida</label>
+								<label class="col-lg-3 control-label">{{ cierreSalida }}</label>
+
+							</div>
+							<div class="row">
+								<label class="col-lg-3 control-label">Cantidad</label>
+								<div class="col-lg-9">
+									<input type="text" class="form-control control-input" ng-model="cierreExcedente" />
+								</div>
+							</div>
+						</div>
+						<div class="col-md-7">
+							Contactos
+							<div id="contentContactos">
+								<div class="gridStyle Grid200" ng-grid="gridOptions"></div>
+							</div>
+						</div>
+					</div>	
+			<!-- 		<br>
+					<div class="row">
+							<label id="cliente" class="control-label">
+							Consumos
+						</label>
+						<br>
+						<br />
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Producto</label>
+                    <div class="col-lg-9">
+                        <form class="eventInsForm2" action="#" method="post">
+                            <input type="text" id="tConsumo" class="form-control" ng-model="semillaConsumo" placeholder="Elija el consumo" ng-click="ClearConsumo()" />
+                        </form>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Cantidad</label>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" ng-model="tempProducto.cantidad" placeholder="Cantidad" ng-change="AjustaPrecio()" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Precio</label>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control currencii" ng-model="tempProducto.precio" placeholder="Precio" />
+                    </div>
+                </div>
+                <br />
+					</div> -->
+					<br>
+					<div class="row">
+						<div class="col-md-9">
+							<div class="form-group">
+								<label class="col-lg-3 control-label">Firma</label>
+								<div class="col-lg-9">
+									<iframe id="firmaMonitor" class="firma"></iframe>
+								</div>
+							</div>
+							
+						</div>
+						<div class="col-md-3">
+							<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="Cancelar();"> 
+								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar
+							</button>
+							<button type="button" class="btn btn-primary" aria-label="Left Align" ng-click="TerminarCierre();" data-loading-text="Cerrando..." id="btnCerrarSala">
+								<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Cerrar Sala
+							</button>
+						</div>
+					</div> 
+				</div>
+			</div>
+		</section>
+
+		<section id="grid" class="mainContent">
+			<tabset>
+				<tab heading="Del Valle 1">
+					<table class="table"> 
+						<thead>
+							<tr>
+								<th>Sucursal</th>
+								<th>Sala</th>
+								<th>Cliente</th>
+								<th>Coment.</th>
+								<th>Inicio</th>
+								<th>Término</th>
+								<th>Reservados</th>
+								<th>Transcurridos</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="sala in listaReservacionesMonitor1" ng-class="{ 'active' : sala.etapa == 1}">
+								<td ng-class="{ 'nada': sala.etapa == 2, 'success': sala.etapa == 3, 'danger': sala.reservados <= sala.transcurridos, 'info' : sala.tipo == 3, 'warning': sala.inicio == 1 }">{{ sala.sucursal }}</td>
+								<td>{{ sala.sala }}</td>
+								<td>{{ sala.cliente }}</td>
+								<td>
+									<div ng-class="{ 'oculto': sala.comentarios == '' }">
+										<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="ShowComment(sala);">
+											<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+										</button>
+									</div>
+								</td>
+								<td>{{ sala.desde }}</td>
+								<td>{{ sala.hasta }}</td>
+								<td>{{ sala.reservados }}</td>
+								<td>{{ sala.transcurridos }}</td>
+								<td>
+									<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="MarcarVista(sala);" id="btnVista" data-loading-text="...">
+										<span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+									</button>
+									
+									<button type="button" class="btn btn-success" aria-label="Left Align" ng-click="MarcarEntrada(sala);" id="btnEntrada" data-loading-text="...">
+										<span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+									</button>
+									<button type="button" class="btn btn-danger" aria-label="Left Align" ng-click="CerrarSala(sala);">
+										<span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+									</button>
+									<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="Extender(sala)" data-loading-text="...">
+										<span class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</tab>
+				<tab heading="Del Valle 2" select="alertMe()">
+					<table class="table"> 
+						<thead>
+							<tr>
+								<th>Sucursal</th>
+								<th>Sala</th>
+								<th>Cliente</th>
+								<th>Coment.</th>
+								<th>Inicio</th>
+								<th>Término</th>
+								<th>Reservados</th>
+								<th>Transcurridos</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="sala in listaReservacionesMonitor2" ng-class="{ 'active' : sala.etapa == 1 }">
+								<td ng-class="{'nada': sala.etapa == 2, 'success': sala.etapa == 3 , 'danger': sala.reservados <= sala.transcurridos, 'info' : sala.tipo == 3, 'warning': sala.inicio == 1 }">{{ sala.sucursal }}</td>
+								<td>{{ sala.sala }}</td>
+								<td>{{ sala.cliente }}</td>
+								<td>
+									<div ng-class="{ 'oculto': sala.comentarios == '' }">
+										<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="ShowComment(sala);">
+											<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+										</button>
+									</div>
+								</td>
+								<td>{{ sala.desde }}</td>
+								<td>{{ sala.hasta }}</td>
+								<td>{{ sala.reservados }}</td>
+								<td>{{ sala.transcurridos }}</td>
+								<td>
+									<button type="button" class="btn btn-default btnVista" aria-label="Left Align" ng-click="MarcarVista(sala);" data-loading-text="..." >
+										<span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+									</button>
+									<button type="button" class="btn btn-success btnEntrada" aria-label="Left Align" ng-click="MarcarEntrada(sala);" data-loading-text="...">
+										<span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+									</button>
+									<button type="button" class="btn btn-danger" aria-label="Left Align" ng-click="CerrarSala(sala);">
+										<span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+									</button>
+									<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="Extender(sala)" data-loading-text="...">
+										<span class="glyphicon glyphicon-resize-full" aria-hidden="true"></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</tab>
+			</tabset>
+		</section>
+	</div><!-- Contenedor principal -->
+</div>
+<!-- Comentarios-->
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="viewComentarios">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Comentarios</h4>
+			</div>
+			<div class="modal-body">
+				{{ comentarios }}
+				<br>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="extendSala">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Extender Horario de Sala</h4>
+			</div>
+			<div class="modal-body">
+				Cliente: {{ extendSala.cliente }}
+				<br>
+				<br>
+				Sala:
+				<div class="btn-group" dropdown is-open="status.isopen">
+					<button type="button" class="btn btn-primary dropdown-toggle">
+						{{ extendSala.sala }} <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a ng-click="toggleSala($event,1)">Sala Tipo A</a></li>
+						<li><a ng-click="toggleSala($event,2)">Sala Tipo A+</a></li>
+						<li><a ng-click="toggleSala($event,3)">Sala Tipo B</a></li>
+						<li><a ng-click="toggleSala($event,4)">Sala Tipo C</a></li>
+						<li><a ng-click="toggleSala($event,5)">Sala Tipo D</a></li>
+						<li><a ng-click="toggleSala($event,6)">Oficina A</a></li>
+						<li><a ng-click="toggleSala($event,7)">Oficina B1</a></li>
+						<li><a ng-click="toggleSala($event,8)">Oficina B2</a></li>
+						<li><a ng-click="toggleSala($event,9)">Oficina B3</a></li>
+						<li><a ng-click="toggleSala($event,10)">HotDesk 1</a></li>
+						<li><a ng-click="toggleSala($event,11)">HotDesk 2</a></li>
+						<li><a ng-click="toggleSala($event,12)">HotDesk 3</a></li>
+					</ul>
+				</div>
+				<br>
+				<br>
+				<div class="row">
+					<div class="col-md-6">Desde: 
+						<timepicker ng-model="mydesde" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker></div>
+						<div class="col-md-6">Hasta:
+							<timepicker ng-model="myhasta" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker></div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="TerminarExtender()" >Extender</button>
+					</div>
+				</div>
+			</div>
+		</div>

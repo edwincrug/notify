@@ -1,0 +1,108 @@
+<link href="css/envioMain.css" rel="stylesheet" />
+<link href='css/fullcalendar.css' rel='stylesheet' />
+<div cg-busy="myPromise">
+	<div ng-init="init()" ng-style="style()" resize>
+		<section id="header" class="mainContent">	
+			<h1 id="titulo"> {{ cliente.razonSocial }} </h1>
+			<div id="selectDate">
+				<div class="row">
+					<div class="col-md-3">
+						<p class="input-group">
+							<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Cerrar" ng-change="SetDate()"/>
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+						</p>
+						
+					</div>
+					<div class="col-md-9"><button type="button" class="btn btn-default" aria-label="Left Align" ng-click="Limpiar()">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Limpiar
+				</button></div>
+				</div>
+			</div>
+			<div id="controls" >
+				<div class="row">
+					<div class="col-md-2">Fecha</div>
+					<div class="col-md-5">
+						{{ fecha }}					
+					</div>
+				</div>	
+				<div class="row">	
+					<div class="col-md-2">Hora Inicio</div>
+					<div class="col-md-5">
+						{{ desde }}		
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">Hora Fin</div>
+					<div class="col-md-5">
+						{{ hasta }}		
+					</div>
+				</div>	
+				<br />
+				<div class="row">
+					<div class="col-md-2">Remitente</div>
+					<div class="col-md-5">
+						<input type="text" class="form-control" ng-model="objetoEnvio.remitente" placeholder="¿Quién envía?" ng-class="{ 'requiredInput' : objetoEnvio.remitente.length < 1 }"></input>					
+					</div>
+				</div>	
+				<div class="row">
+					<div class="col-md-2">Destinatario</div>
+					<div class="col-md-5">
+						<input type="text" class="form-control" ng-model="objetoEnvio.destinatario" placeholder="¿A quién se entrega?" ng-class="{ 'requiredInput' : objetoEnvio.destinatario.length < 1 }"></input>						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">Material</div>
+					<div class="col-md-5">
+						<input type="text" class="form-control" ng-model="objetoEnvio.material" placeholder="Descripción del material" ng-class="{ 'requiredInput' : objetoEnvio.material.length < 1 }"></input>						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">Condiciones especiales</div>
+					<div class="col-md-5">
+						<textarea rows="2" class="form-control" ng-model="objetoEnvio.condiciones" placeholder="Observaciones para el envío o la entrega" ></textarea>					
+					</div>
+				</div>	
+				<div class="row">
+					<div class="col-md-2">Lugar de entrega</div>
+					<div class="col-md-5">
+						<textarea rows="2" class="form-control" ng-model="objetoEnvio.lugar" placeholder="Dirección de entrega" ng-class="{ 'requiredInput' : objetoEnvio.lugar.length < 1 }"></textarea>					
+					</div>	
+				</div>	
+				<br />
+				<div class="row">
+					<div class="col-md-2">Tipo</div>
+					<div class="col-md-5">
+						<div class="btn-group">
+							<label class="btn btn-primary" ng-model="objetoEnvio.tipo" btn-radio="1">Normal</label>
+							<label class="btn btn-primary" ng-model="objetoEnvio.tipo" btn-radio="2">Express</label>
+						</div>
+					</div>  
+				</div>	
+				<br />
+				<div class="row">
+					<div class="col-md-2">Destinatarios</div>
+					<div class="col-md-5">
+						<div class="gridStyle Grid200" ng-grid="gridOptions"></div>
+					</div>  
+				</div>	
+			</div>
+		</section>
+		<section id="rooms" class="mainContent">
+			<div id="room1"></div>
+			
+		</section>
+		<section id="confirm" >
+<div id="positionConfirm">
+				
+				<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="Cancelar()" >
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar
+				</button>
+				<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="Enviar()" data-loading-text="Enviando..." id="btnEnviar">
+					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Guardar
+				</button>
+			</div>
+		</section>
+	</div><!-- Contenedor principal -->
+</div>

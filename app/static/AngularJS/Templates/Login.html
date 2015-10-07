@@ -1,0 +1,31 @@
+﻿<link href="css/login.css" rel="stylesheet" />
+<div cg-busy="myLoginPromise">
+    <section id="content">
+
+        <article id="login">
+            <div id="logo">
+                <figure>
+                    <img src="../../Images/logoIni.png" id="figLogo">
+                </figure>
+            </div>
+
+            <div id="boxLogin">
+
+                <div id="texto" class="rowHome">
+                    Inicie Sesión
+                </div>
+                <div id="user" class="rowHome">
+                    <label for="txtUsuario" class="label">Usuario</label><input type="text" id="txtUsuario" ng-model="usuario" class="txtLogin" />
+                </div>
+                <div id="password" class="rowHome">
+                    <label for="txtPassword" class="label">Password</label><input type="password" id="txtPassword" ng-model="password" class="txtLogin" />
+                </div>
+                <div id="buttons" class="rowHome">
+                    <button id="btnSingIn" class="buttonMain primary" ng-click="Iniciar()">Iniciar</button>
+                </div>
+            </div>
+
+        </article>
+
+    </section>
+</div>
