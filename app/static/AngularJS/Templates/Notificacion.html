@@ -1,0 +1,151 @@
+﻿<div cg-busy="myPromise" ng-init="init()">
+    <div id="contenedor">
+        <section id="encabezado">
+            <p class="text-right" id="reloj"> {{ hora | date:'MM/dd/yyyy @ h:mm:ssa' }}</p>
+            <h2>Centro de Notificaciones</h2>
+        </section>
+        <section id="contenido">
+            <tabset>
+                <tab select="alertMe()">
+                    <tab-heading>
+                        <i class="glyphicon glyphicon-bell"></i> Nuevas
+                    </tab-heading>
+                    <div id="cuerpoTab">
+                        <accordion close-others="oneAtATime">
+                            <accordion-group is-open="status.open" ng-repeat="notificacion in listaNotificacion" class="itemList" ng-class="{ 'panel-primary': notificacion.estado == 0, 'panel-info': notificacion.estado == 1 }" ng-click="Visto(notificacion)">
+                                <accordion-heading>
+                                    <i class="pull-right glyphicon flecha" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                    <div class="row">
+                                        <div class="col-xs-1"> <span class="glyphicon" ng-class="{ 'glyphicon-hourglass': notificacion.tipoNotificacion == 1, 'glyphicon-bell': notificacion.tipoNotificacion == 2,  'glyphicon-comment': notificacion.tipoNotificacion == 3 }" aria-hidden="true"></span> </div>
+                                        <div class="col-xs-3">{{ 'ID: ' + notificacion.identificador }} </div>
+                                        <div class="col-xs-2">{{ notificacion.tipoProceso }} </div>
+                                        <div class="col-xs-5">{{ notificacion.fecha  | date:"dd-MM-yy HH:mm" }} </div>
+                                        <div class="col-xs-1"></div>
+                                    </div>
+                                </accordion-heading>
+                                <div class="contenedorNotificacion">
+                                    <div class="row">
+                                        <div class="tipoLeft pull-left">{{ 'Nodo:' + notificacion.etapaProceso + ' | Tipo: ' + notificacion.agrupacion }}</div>
+                                        <div class="priorRight pull-right">{{ '  Prioridad: ' + notificacion.stringPrioridad }}</div>
+
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="labelNotificacion col-xs-3">Solicitó</div>
+                                        <div class=" col-xs-9">{{ notificacion.solicitante }}</div>
+                                        <!--<div class="labelNotificacion col-xs-2">Fecha</div>-->
+                                        <!--<div class=" col-xs-4">{{ notificacion.fecha  | date:"MM/dd h:mma" }}</div>-->
+                                    </div>
+                                    <div class="row">
+                                        <div class="labelNotificacion col-xs-3">Descripción:</div>
+                                        <div class=" col-xs-9">{{ notificacion.descripcionLarga  }}</div>
+                                    </div>
+
+                                    <div class="row botonera">
+                                        <button type="button" class="btn btn-info btn-sm btnVerBusiness"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> BusinessPro</button>
+                                        <button type="button" class="btn btn-sm btnVerBusiness" ng-class="{ 'btn-default': notificacion.chat == 0, 'btn-success': notificacion.chat > 0 }" ng-click="ShowChat(notificacion)" ng-controller="conversacionController"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+                                        <span class="glyphicon glyphicon-phone iconBadge" aria-hidden="true" ng-class="{ 'oculto': notificacion.correoEnviado == 0 || notificacion.tipoNotificacion != 1 }"><span class="badge badgeNotificacion">{{ notificacion.correoEnviado }}</span></span>
+                                        <span class="glyphicon glyphicon-bell iconBadge" aria-hidden="true" ng-class="{ 'oculto': notificacion.escalado == 0  || notificacion.tipoNotificacion != 1 }"> <span class="badge badgeNotificacion">{{ notificacion.usuarioEscalado }}</span></span> 
+                                    </div>
+                                    <hr ng-class="{ 'oculto': notificacion.tipoNotificacion != 1 }" />
+                                    <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 1 }" ng-controller="aprobacionController">
+                                        <div class="col-xs-6"><textarea class="form-control" rows="3" ng-model="observacion"></textarea></div>
+                                        <div class="col-xs-6">
+                                            <button type="button" class="btn btn-success btn-sm btnAprove" data-loading-text="Aprobando..." id="btnApprove" ng-click="Aprobar(notificacion)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Apruebo</button>
+                                            <button type="button" class="btn btn-danger btn-sm btnReject" data-loading-text="Rechazando..." id="btnReject" ng-click="Rechazar(notificacion)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Rechazo</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </accordion-group>
+                        </accordion>
+                    </div>
+                </tab>
+                <tab select="alertMe()">
+                    <tab-heading>
+                        <i class="glyphicon glyphicon-ok"></i> Completadas
+                    </tab-heading>
+                    <div id="cuerpoTab">
+                        <accordion close-others="oneAtATime">
+                            <accordion-group is-open="status.open" ng-repeat="aprobacion in listaAprobacion" class="itemList" ng-class="{ 'panel-success': aprobacion.aprobacion == 1 && aprobacion.tipoNotificacion == 1, 'panel-danger': aprobacion.aprobacion == 2 && aprobacion.tipoNotificacion == 1, 'panel-warning': aprobacion.tipoNotificacion != 1 }">
+                                <accordion-heading>
+                                    <i class="pull-right glyphicon flecha" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                    <div class="row">
+                                        <div class="col-xs-1"> <span class="glyphicon" ng-class="{ 'glyphicon-hourglass': aprobacion.tipoNotificacion == 1, 'glyphicon-bell': aprobacion.tipoNotificacion == 2,  'glyphicon-comment': aprobacion.tipoNotificacion == 3 }" aria-hidden="true"></span> </div>
+                                        <div class="col-xs-3">{{ 'ID: ' + aprobacion.identificador }} </div>
+                                        <div class="col-xs-2">{{ aprobacion.tipoProceso }} </div>
+                                        <div class="col-xs-5">{{ aprobacion.fecha  | date:"dd-MM-yy HH:mm" }} </div>
+                                        <div class="col-xs-1"></div>
+                                    </div>
+                                </accordion-heading>
+                                <div class="contenedorNotificacion">
+                                    <div class="row">
+                                        <div class="tipoLeft pull-left">{{ 'Nodo:' + aprobacion.etapaProceso + ' | Tipo: ' + aprobacion.agrupacion }}</div>
+                                        <div class="priorRight pull-right">{{ '  Prioridad: ' + aprobacion.stringPrioridad }}</div>
+
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="labelNotificacion col-xs-3">Solicitó</div>
+                                        <div class=" col-xs-9">{{ aprobacion.solicitante }}</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="labelNotificacion col-xs-3">Descripción:</div>
+                                        <div class=" col-xs-9">{{ aprobacion.descripcionLarga  }}</div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="labelNotificacion col-xs-3">{{ aprobacion.aprobacion === 1 ? 'Aprobación' : 'Rechazo' }}:</div>
+                                        <div class=" col-xs-9">{{ aprobacion.comentario  }}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="labelNotificacion col-xs-3">Fecha:</div>
+                                        <div class=" col-xs-9">{{ aprobacion.fechaAprobacion  | date:"dd-MM-yy HH:mm"  }}</div>
+                                    </div>
+
+                                    <div class="row botonera">
+                                        <button type="button" class="btn btn-info btn-sm btnVerBusiness"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> BusinessPro</button>
+                                        <button type="button" class="btn btn-sm btnVerBusiness" ng-class="{ 'btn-default': aprobacion.chat == 0, 'btn-success': aprobacion.chat > 0 }" ng-click="ShowChat(aprobacion)" ng-controller="conversacionController"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+                                    </div>
+                                </div>
+                            </accordion-group>
+                        </accordion>
+                    </div>
+                </tab>
+            </tabset>
+        </section>
+    </div>
+    <div id="chico">
+        <h1>Incremente el tamaño de la pantalla</h1>
+    </div>
+</div>
+
+<!-- Modal para  -->
+<div class="modal fade" id="modalChat" tabindex="-1" role="dialog" ng-controller="conversacionController">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">{{ 'ID: ' + currentNotificacion.identificador + ' | ' + currentNotificacion.tipoProceso + ' | ' + currentNotificacion.etapaProceso }} </h4>
+            </div>
+            <div class="modal-body">
+                <!--<div class="well">{{ currentNotificacion.descripcionLarga }}</div>-->
+                <div id="chat">
+                    <div class="chatItem" ng-repeat="conversacion in listaConversacion">
+                        <div class="sender" ng-class="{ 'right': conversacion.idEmpleado == currentEmployee, 'left': conversacion.idEmpleado != currentEmployee }"><span class="glyphicon glyphicon-user iconChat" aria-hidden="true"></span> {{ conversacion.idEmpleado === currentEmployee ? 'Yo' : conversacion.nombre }}</div>
+                        <div class="date" ng-class="{ 'right': conversacion.idEmpleado == currentEmployee, 'left': conversacion.idEmpleado != currentEmployee }"> {{ conversacion.fecha | date:"dd-MM-yy HH:mm" }} </div>
+                        <div class="text" ng-class="{ 'right': conversacion.idEmpleado == currentEmployee, 'left': conversacion.idEmpleado != currentEmployee }"> {{ conversacion.texto }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-9"><input type="text" class="form-control" ng-model="comentario" placeholder="Escriba un comentario" /></div>
+                    <button type="button" class="btn btn-primary" data-loading-text="Enviando..." id="btnEnviar" ng-click="EnviarComentario()">Enviar</button>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
