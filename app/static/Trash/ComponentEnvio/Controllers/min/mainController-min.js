@@ -1,1 +1,0 @@
-envioModule.controller("mainController",function(l,o,e,i,n){l.semilla="",l.semillaServicio="",l.base=!0,l.info="Me lleva la riata",l.radioCorrespondenciaModel=null,l.Colgar=function(){l.inCall=!1}});

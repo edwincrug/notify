@@ -1,1 +1,0 @@
-var empleadoUrl=global_settings.urlCORS+"api/empleadoapi/";registrationModule.factory("empleadoRepository",function(e){return{getEmpleado:function(){return e.get(empleadoUrl+"1-0")},getEmpty:function(){return e.get(empleadoUrl+"0-0")},add:function(t){return e.post(empleadoUrl,t)},"delete":function(){return e["delete"](empleadoUrl)},put:function(t){return e.put(empleadoUrl,t)}}});

@@ -1,1 +1,0 @@
-var administracionUrl=global_settings.urlCORS+"api/administracionapi/";registrationModule.factory("administracionRepository",function(i){return{get:function(){return i.get(administracionUrl+"0-0")},add:function(){return i.post(administracionUrl)},"delete":function(){return i["delete"](administracionUrl)},put:function(){return i.put(administracionUrl)}}});

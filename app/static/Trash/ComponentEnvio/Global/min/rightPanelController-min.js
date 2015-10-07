@@ -1,1 +1,0 @@
-envioModule.controller("rightPanelController",function(l,n,o,t){l.Exit=function(){o.set("ultimaCarga",null)}});

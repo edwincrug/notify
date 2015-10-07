@@ -1,1 +1,0 @@
-registrationModule.controller("loginController",function(o,l,n,r,t){});

@@ -1,1 +1,0 @@
-registrationModule.controller("inventarioController",function(r,o,n,e,i){var t=function(r,o,n,e){i.error("Ocurrio un problema "+r.message)}});

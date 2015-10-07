@@ -1,1 +1,0 @@
-registrationModule.controller("solosController",function(r,e,o,a){r.Procesar=function(){confirm("¿Desea procesar el pago para esta reservación?")},r.Eliminar=function(){confirm("¿Desea cancelar esta reservación?")}});

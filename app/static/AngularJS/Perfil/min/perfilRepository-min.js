@@ -1,1 +1,0 @@
-var perfilUrl=global_settings.urlCORS+"api/perfilapi/";registrationModule.factory("perfilRepository",function(r){return{get:function(){return r.get(perfilUrl+"0-0")},add:function(){return r.post(perfilUrl)},"delete":function(){return r["delete"](perfilUrl)},put:function(){return r.put(perfilUrl)}}});

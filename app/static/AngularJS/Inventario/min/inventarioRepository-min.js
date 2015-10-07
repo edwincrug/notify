@@ -1,1 +1,0 @@
-var inventarioUrl=global_settings.urlCORS+"api/inventarioapi/";registrationModule.factory("inventarioRepository",function(n){return{get:function(){return n.get(inventarioUrl+"0-0")},add:function(){return n.post(inventarioUrl)},"delete":function(){return n["delete"](inventarioUrl)},put:function(){return n.put(inventarioUrl)}}});
