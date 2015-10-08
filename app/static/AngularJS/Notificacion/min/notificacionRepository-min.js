@@ -16,3 +16,4 @@ registrationModule.factory('notificacionRepository', function ($http) {
         }
     };
 });
+

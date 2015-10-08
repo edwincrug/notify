@@ -1,4 +1,4 @@
-﻿registrationModule.controller("errorController", function ($scope, $rootScope, localStorageService, alertFactory, errorRepository, aprobacionRepository) {
+﻿registrationModule.controller("notificacionController", function ($scope, $rootScope, localStorageService, alertFactory, notificacionRepository, aprobacionRepository) {
 
     //Propiedades
     $scope.oneAtATime = true;
@@ -29,7 +29,7 @@
         $('#btnApprove').button('reset');
     };
 
-    //Success al obtener error
+    //Success al obtener notificaciones
     var getNSuccessCallback = function (data, status, headers, config) {
         //Obtiene Notificaciones
         if ($scope.listaNotificacion != null) {
@@ -39,11 +39,11 @@
             }
             if (data.length > inicial)
             {
-                alertFactory.info((data.length - inicial).toString() + ' nuevos errores.');
+                alertFactory.info((data.length - inicial).toString() + ' nuevas notificaciones.');
             }
         }
         else
-            $scope.listaError = data;
+            $scope.listaNotificacion = data;
         
     };
 
@@ -63,7 +63,7 @@
     //Consulto el servidor para buscar nuevas notificaciones
     $rootScope.Reload = function () {
         //Obtengo las notificaciones
-        errorRepository.get($rootScope.currentEmployee)
+        notificacionRepository.get($rootScope.currentEmployee)
             .success(getNSuccessCallback)
             .error(errorCallBack);
 
@@ -91,3 +91,4 @@
 
 
 });
+
