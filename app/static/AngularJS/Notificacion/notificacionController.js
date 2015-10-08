@@ -1,4 +1,4 @@
-﻿registrationModule.controller("notificacionController", function ($scope, $rootScope, localStorageService, alertFactory, notificacionRepository, aprobacionRepository, errorRepository) {
+﻿registrationModule.controller("notificacionController", function ($scope, $rootScope, localStorageService, alertFactory, notificacionRepository, aprobacionRepository) {
 
     //Propiedades
     $scope.oneAtATime = true;
@@ -24,7 +24,6 @@
 
     //Mensajes en caso de error
     var errorCallBack = function (data, status, headers, config) {
-        errorRepository.get($rootScope.Visto);
         alertFactory.error('Ocurrio un problema');
         $('#btnReject').button('reset');
         $('#btnApprove').button('reset');
