@@ -1,40 +1,56 @@
 ﻿<div cg-busy="myPromise" ng-init="init()">
     <div id="contenedor">
         <section id="encabezado">
-            <p class="text-right" id="reloj"> {{ hora | date:'MM/dd/yyyy @ h:mm:ssa' }}</p>
-            <h2>Centro de Notificaciones</h2>
+            <div class="text-right" id="reloj"> {{ hora | date:'h:mm:ssa' }}</div>
+            <div id="usuario">
+                <div id="nombre" >Jose Juan Pérez</div> 
+                <img src="image/profile/man.jpg" id="avatar"/>
+            </div>
+            <div id="filtros">
+                <button type="button" class="btn btn-default btn-sm glyphicon iconFiltro" tooltip="{{ tooltipAlphabeth }}" ng-class="{ 'glyphicon-sort-by-alphabet': alphaOrder == true, 'glyphicon-sort-by-alphabet-alt': alphaOrder == false }" ng-click="AlphaOrder()"></button>
+                <button type="button" class="btn btn-default btn-sm glyphicon glyphicon-calendar iconFiltro" tooltip="{{ tooltipDate }}" ng-click="DateOrder()"><span class="glyphicon iconChevron" aria-hidden="true" ng-class="{ 'glyphicon-chevron-down': dateOrder == true, 'glyphicon-chevron-up': dateOrder == false }" ></span></button>
+                |
+                <button type="button" class="btn btn-sm glyphicon glyphicon-filter iconFiltro" tooltip="Filtrar" ng-click="ViewFiltro()" ng-class="{ 'btn-default': filtrado == false, 'btn-info': filtrado == true }"></button>
+            </div>
+            <h2 id="headerTitle">Centro de Notificaciones</h2>
         </section>
         <section id="contenido">
             <tabset>
-                <tab select="alertMe()">
+                <tab>
                     <tab-heading>
                         <i class="glyphicon glyphicon-bell"></i> Nuevas
                     </tab-heading>
                     <div id="cuerpoTab">
+                        <div class="input-group" id="buscar">
+                          <input type="text" class="form-control" placeholder="Introduzca una palabra buscar..." id="slideIzq" ng-model="text" ng-change="TextSearch()" />
+                          <span class="input-group-btn">
+                            <span class="btn glyphicon" ng-class="{ 'glyphicon-search': isSearching == false, 'glyphicon-remove': isSearching == true }" id="btnSlideIzq" type="button" ng-click="ViewSearch()"></span>
+                          </span>
+                        </div>
+                        <br><br>
+                        {{ keySearch }}
                         <accordion close-others="oneAtATime">
-                            <accordion-group is-open="status.open" ng-repeat="notificacion in listaNotificacion" class="itemList" ng-class="{ 'panel-primary': notificacion.estado == 0, 'panel-info': notificacion.estado == 1 }" ng-click="Visto(notificacion)">
+                            <accordion-group is-open="notificacion.open" ng-repeat="notificacion in listaNotificacion" class="itemList" ng-class="{ 'panel-primary': notificacion.estado == 0, 'panel-info': notificacion.estado == 1 }" ng-click="Visto(notificacion)">
                                 <accordion-heading>
-                                    <i class="pull-right glyphicon flecha" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                    <i class="pull-right glyphicon flecha" ng-class="{'glyphicon-chevron-down': notificacion.open, 'glyphicon-chevron-right': !notificacion.open}"></i>
                                     <div class="row">
                                         <div class="col-xs-1"> <span class="glyphicon" ng-class="{ 'glyphicon-hourglass': notificacion.tipoNotificacion == 1, 'glyphicon-bell': notificacion.tipoNotificacion == 2,  'glyphicon-comment': notificacion.tipoNotificacion == 3 }" aria-hidden="true"></span> </div>
-                                        <div class="col-xs-3">{{ 'ID: ' + notificacion.identificador }} </div>
-                                        <div class="col-xs-2">{{ notificacion.tipoProceso }} </div>
-                                        <div class="col-xs-5">{{ notificacion.fecha  | date:"dd-MM-yy HH:mm" }} </div>
+                                        <div class="col-xs-4">{{ notificacion.agencia }} </div>
+                                         <div class="col-xs-4">{{ 'ID: ' + notificacion.identificador }} </div>
+                                        <div class="col-xs-2">{{ notificacion.fecha  | date:"dd/MM HH:mm" }} </div>
                                         <div class="col-xs-1"></div>
                                     </div>
                                 </accordion-heading>
                                 <div class="contenedorNotificacion">
                                     <div class="row">
                                         <div class="tipoLeft pull-left">{{ 'Nodo:' + notificacion.etapaProceso + ' | Tipo: ' + notificacion.agrupacion }}</div>
-                                        <div class="priorRight pull-right">{{ '  Prioridad: ' + notificacion.stringPrioridad }}</div>
+                                        <div class="priorRight pull-right">{{ '  Departamento: ' + notificacion.stringPrioridad }}</div>
 
                                     </div>
                                     <br />
                                     <div class="row">
                                         <div class="labelNotificacion col-xs-3">Solicitó</div>
                                         <div class=" col-xs-9">{{ notificacion.solicitante }}</div>
-                                        <!--<div class="labelNotificacion col-xs-2">Fecha</div>-->
-                                        <!--<div class=" col-xs-4">{{ notificacion.fecha  | date:"MM/dd h:mma" }}</div>-->
                                     </div>
                                     <div class="row">
                                         <div class="labelNotificacion col-xs-3">Descripción:</div>
@@ -60,13 +76,13 @@
                         </accordion>
                     </div>
                 </tab>
-                <tab select="alertMe()">
+                <tab>
                     <tab-heading>
                         <i class="glyphicon glyphicon-ok"></i> Completadas
                     </tab-heading>
                     <div id="cuerpoTab">
                         <accordion close-others="oneAtATime">
-                            <accordion-group is-open="status.open" ng-repeat="aprobacion in listaAprobacion" class="itemList" ng-class="{ 'panel-success': aprobacion.aprobacion == 1 && aprobacion.tipoNotificacion == 1, 'panel-danger': aprobacion.aprobacion == 2 && aprobacion.tipoNotificacion == 1, 'panel-warning': aprobacion.tipoNotificacion != 1 }">
+                            <accordion-group is-open="status.open" ng-repeat="aprobacion in listaAprobacion" class="itemList" ng-class="{ 'panel-success': aprobacion.aprobacion == 1, 'panel-danger': aprobacion.aprobacion == 2 }">
                                 <accordion-heading>
                                     <i class="pull-right glyphicon flecha" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                                     <div class="row">
@@ -95,7 +111,7 @@
                                     </div>
                                     <hr />
                                     <div class="row">
-                                        <div class="labelNotificacion col-xs-3">{{ aprobacion.aprobacion === 1 ? 'Aprobación' : 'Rechazo' }}:</div>
+                                        <div class="labelNotificacion col-xs-3">{{ aprobacion.aprobacion === 1 ? 'Aprobó' : 'Rechazó' }}:</div>
                                         <div class=" col-xs-9">{{ aprobacion.comentario  }}</div>
                                     </div>
                                     <div class="row">
@@ -120,7 +136,7 @@
     </div>
 </div>
 
-<!-- Modal para  -->
+<!-- Modal para Chat-->
 <div class="modal fade" id="modalChat" tabindex="-1" role="dialog" ng-controller="conversacionController">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -148,4 +164,81 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal para Filtros-->
+<div class="modal fade" id="modalFiltro" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Filtros </h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Marca</label>
+                    <div class="col-sm-8">
+                      <div class="input-group">
+                          <input type="text" class="form-control" aria-label="...">
+                          <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                              <li><a href="#">Action</a></li>
+                              <li><a href="#">Another action</a></li>
+                              <li><a href="#">Something else here</a></li>
+                              <li role="separator" class="divider"></li>
+                              <li><a href="#">Separated link</a></li>
+                            </ul>
+                          </div><!-- /btn-group -->
+                        </div><!-- /input-group -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Sucursal</label>
+                    <div class="col-sm-8">
+                      <div class="tableContent">
+                      <table class="table table-striped table-condensed table-hover">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td> 1</td>
+                            <td> Corporativo </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Departamento</label>
+                    <div class="col-sm-8">
+                      <div class="input-group">
+                          <input type="text" class="form-control" aria-label="...">
+                          <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                              <li><a href="#">Action</a></li>
+                              <li><a href="#">Another action</a></li>
+                              <li><a href="#">Something else here</a></li>
+                              <li role="separator" class="divider"></li>
+                              <li><a href="#">Separated link</a></li>
+                            </ul>
+                          </div><!-- /btn-group -->
+                        </div><!-- /input-group -->
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning" ng-click="QuitarFiltro()" ng-show="filtrado">Quitar Filtro</button>
+            <button type="button" class="btn btn-primary" ng-click="AplicarFiltro()">Aplicar Filtro</button>
+        </div>
+    </div>
+  </div>
 </div>
