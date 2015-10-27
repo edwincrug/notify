@@ -37,6 +37,7 @@
         alertFactory.success('Comentarios registrados.');
         $('#btnEnviar').button('reset');
         $('#modalChat').modal('hide');
+        $scope.comentario = '';
     };
 });
 

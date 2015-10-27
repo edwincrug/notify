@@ -1,12 +1,20 @@
-﻿registrationModule.controller("notificacionController", function ($scope, $rootScope, localStorageService, alertFactory, notificacionRepository, aprobacionRepository) {
+registrationModule.controller("notificacionController", function ($scope, $rootScope, localStorageService, alertFactory, notificacionRepository, aprobacionRepository) {
 
     //Propiedades
     $scope.oneAtATime = true;
+    $scope.isSearching = false;
+    //Variables de control de orden
+    $scope.alphaOrder = false;
+    $scope.tooltipAlphabeth = 'Ordenar Descencente';
+    $scope.dateOrder = false;
+    $scope.tooltipDate = 'Ordenar Descencente';
+    //Variable de control de filtros
+    $scope.filtrado = false; 
 
     //Grupo de funciones de inicio
     $scope.init = function () {
-
-        $rootScope.currentEmployee = 'AN001';
+        $scope.actualizar = true;
+        $rootScope.currentEmployee = getParameterByName('id');
 
         //Inicializamos la fecha 
         $scope.hora = new Date();
@@ -19,7 +27,6 @@
             $rootScope.Reload();
         }, 1000);
 
-        $('[data-toggle="tooltip"]').tooltip()
     };
 
     //Mensajes en caso de error
@@ -34,9 +41,10 @@
         //Obtiene Notificaciones
         if ($scope.listaNotificacion != null) {
             var inicial = $scope.listaNotificacion.length;
-            if (data.length != inicial) {
-                $scope.listaNotificacion = data;  
-            }
+            //if (data.length != inicial) {
+                if($scope.actualizar)
+                    $scope.listaNotificacion = data;  
+            //}
             if (data.length > inicial)
             {
                 alertFactory.info((data.length - inicial).toString() + ' nuevas notificaciones.');
@@ -62,15 +70,15 @@
 
     //Consulto el servidor para buscar nuevas notificaciones
     $rootScope.Reload = function () {
-        //Obtengo las notificaciones
-        notificacionRepository.get($rootScope.currentEmployee)
-            .success(getNSuccessCallback)
-            .error(errorCallBack);
+       //  //Obtengo las notificaciones
+       //  notificacionRepository.get($rootScope.currentEmployee)
+       //      .success(getNSuccessCallback)
+       //      .error(errorCallBack);
 
-       // Obtengo las aprobaciones
-        aprobacionRepository.get($rootScope.currentEmployee)
-                .success(getASuccessCallback)
-                .error(errorCallBack);
+       // // Obtengo las aprobaciones
+       //  aprobacionRepository.get($rootScope.currentEmployee)
+       //          .success(getASuccessCallback)
+       //          .error(errorCallBack);
     }
 
     //Rercargo el reloj
@@ -83,12 +91,75 @@
     //Funcionalidad de visto
     /////////////////////////////////////////////////////////////////
     $scope.Visto = function (not) {
+        $scope.actualizar = !not.open;
         notificacionRepository.update(not.id)
           .error(errorCallBack);
         not.estado = 1;
     };
 
+    /////////////////////////////////////////////////////////////////
+    //Configuracion de Busquedas 
+    /////////////////////////////////////////////////////////////////
 
+    $scope.ViewSearch = function() {
+        $scope.isSearching = !$scope.isSearching;
+        $("#slideIzq").animate({
+            width: "toggle"
+        });
+        if($scope.isSearching == false){
+            $('#slideIzq').blur();
+            $('#slideIzq').val('');
+        }
+    };
+
+    $scope.TextSearch = function() {
+        $scope.keySearch = $('#slideIzq').val();
+    };
+
+    /////////////////////////////////////////////////////////////////
+    //Configuracion de Ordenamiento 
+    /////////////////////////////////////////////////////////////////
+
+    $scope.AlphaOrder = function() {
+        //Administra el estado del botón
+        $scope.alphaOrder = !$scope.alphaOrder;
+        if($scope.alphaOrder == true){
+            $scope.tooltipAlphabeth = 'Orden Descencente';
+        }
+        else{
+            $scope.tooltipAlphabeth = 'Orden Ascendente';
+        }
+
+    }
+
+    $scope.DateOrder = function() {
+        //Administra el estado del botón
+        $scope.dateOrder = !$scope.dateOrder;
+        if($scope.dateOrder == true){
+            $scope.tooltipDate = 'Orden Descencente';
+        }
+        else{
+            $scope.tooltipDate = 'Orden Ascendente';
+        }
+    };
+
+    /////////////////////////////////////////////////////////////////
+    //Configuracion de Filtros 
+    /////////////////////////////////////////////////////////////////
+
+    $scope.ViewFiltro = function() {
+        $('#modalFiltro').modal('show');
+    };
+
+    $scope.AplicarFiltro = function() {
+        $scope.filtrado = true;
+        $('#modalFiltro').modal('hide');
+    };
+
+    $scope.QuitarFiltro = function() {
+        $scope.filtrado = false;
+        $('#modalFiltro').modal('hide');
+    };
 
 });
 
