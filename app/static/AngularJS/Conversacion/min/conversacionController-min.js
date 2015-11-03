@@ -1,4 +1,4 @@
-﻿registrationModule.controller("conversacionController", function ($scope, $rootScope, localStorageService, alertFactory, conversacionRepository) {
+﻿registrationModule.controller("conversacionController", function ($scope, $rootScope, $location, $anchorScroll, localStorageService, alertFactory, conversacionRepository) {
 
 
     //Mensajes en caso de error
@@ -21,6 +21,14 @@
     var getSuccessCallback = function (data, status, headers, config) {
         $rootScope.listaConversacion = data;
         $('#modalChat').modal('show');
+        if($rootScope.currentNotificacion.chatPendiente > 0){
+            conversacionRepository.update($rootScope.currentEmployee, $rootScope.currentNotificacion.idAprobacion)
+                .error(errorCallBack);
+        }
+        setTimeout(function() {
+            $location.hash('bottom');
+            $anchorScroll();
+        },500);
     };
 
     $scope.EnviarComentario = function () {
@@ -38,6 +46,8 @@
         $('#btnEnviar').button('reset');
         $('#modalChat').modal('hide');
         $scope.comentario = '';
+        $rootScope.actualizar = true;
+        $rootScope.Reload();
     };
 });
 

@@ -101,6 +101,28 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/AngularJS\/Filtro\/filtroRepository.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Filtro\/filtroRepository.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Filtro\/min\/filtroRepository-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/Filtro\/min\/filtroRepository-min.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Filtro\/min\/filtroRepository-min.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Filtro\/min\/min\/filtroRepository-min-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/AngularJS\/min\/alertFactory-min.js": {
 		"fileType": 64,
 		"ignore": 1,
@@ -352,6 +374,28 @@
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
+		},
+	"\/image\/chat\/novisto.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1365,
+		"inputAbbreviatedPath": "\/image\/chat\/novisto.png",
+		"outputAbbreviatedPath": "\/image\/chat\/novisto.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/image\/chat\/visto.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1907,
+		"inputAbbreviatedPath": "\/image\/chat\/visto.png",
+		"outputAbbreviatedPath": "\/image\/chat\/visto.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
 		},
 	"\/image\/profile\/man.jpg": {
 		"fileType": 16384,

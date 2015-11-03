@@ -11,8 +11,8 @@ registrationModule.factory('conversacionRepository', function ($http) {
         delete: function (obj) {
             return $http.delete(conversacionUrl + obj.id);
         },
-        update: function (id) {
-            return $http.put(conversacionUrl + '1|' + id);
+        update: function (empleado, id) {
+            return $http.post(conversacionUrl + '2|' + empleado + '|' + id);
         }
     };
 });

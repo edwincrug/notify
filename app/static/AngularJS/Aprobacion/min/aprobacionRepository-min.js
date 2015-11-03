@@ -5,14 +5,11 @@ registrationModule.factory('aprobacionRepository', function ($http) {
         get: function (id) {
             return $http.get(aprobacionUrl + '1|' + id);
         },
-        add: function (notificacion,empleado,observacion,aprobacion) {
-            return $http.post(aprobacionUrl + '1|' + notificacion + '|' + empleado + '|' + aprobacion + '|' + observacion);
+        visto: function (id,usuario) {
+            return $http.post(aprobacionUrl + '1|' + id + '|' + usuario);
         },
-        delete: function (obj) {
-            return $http.delete(aprobacionUrl + obj.id);
-        },
-        update: function (id) {
-            return $http.put(aprobacionUrl + '1|' + id);
+        responder: function (id,aprobacion,observacion) {
+            return $http.post(aprobacionUrl + '2|' + id + '|' + aprobacion + '|' + observacion);
         }
     };
 });
