@@ -101,7 +101,7 @@
         <div class="row">
             <!-- <div class="tipoLeft pull-left">{{ 'Nodo - ' + aprobacion.etapaProceso + ' | Tipo: ' + aprobacion.agrupacion }}</div>
             <div class="priorRight pull-right">{{ '  Departamento: ' + aprobacion.departamento }}</div> -->
-            <div class="tipoLeft pull-left"><span class="labelNotificacion"> Nodo - </span> {{ aprobacion.etapaProceso + ' | ' }}  <span class="labelNotificacion"> Tipo : </span> {{ (aprobacion.agrupacion === 0 ?  'Unitario': 'Lote') }} </div>
+            <div class="tipoLeft pull-left"><span class="labelNotificacion"> Nodo - </span> {{ aprobacion.etapaProceso + ' | ' }}  <span class="labelNotificacion"> Tipo : </span> {{ (aprobacion.aprobacion === 3 ?  'Aprobó': 'Rechazó') }}: </div>
                         <div class="priorRight pull-right"><span class="labelNotificacion"> Departamento: </span>{{ aprobacion.departamento }}</div>
         </div>
         <br />
@@ -116,7 +116,7 @@
         </div>
         <hr />
         <div class="row">
-            <div class="labelNotificacion col-xs-3">Aprobó:</div>
+            <div class="labelNotificacion col-xs-3">{{ (aprobacion.agrupacion === 0 ?  'Unitario': 'Lote') }}</div>
             <div class=" col-xs-9">{{ aprobacion.aprobador  }}</div>
         </div>
         <div class="row">

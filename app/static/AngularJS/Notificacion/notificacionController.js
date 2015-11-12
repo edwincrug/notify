@@ -50,6 +50,11 @@ registrationModule.controller("notificacionController", function ($scope, $filte
         //Descargo el filtro padre
         GetMarca();
 
+        var socket = io.connect('http://localhost:3100/');
+        socket.on('mejorandola', function(data){
+            alertFactory.warning(data.hola);
+        });
+
     };
 
     //Mensajes en caso de error

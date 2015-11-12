@@ -39,10 +39,19 @@ var ExpressServer = function(config){
         }
     } 
 
+    this.expressServer.get('/hola', function(req, res){
+        res.writeHead(200, {'content-type': 'text/plain'});
+        res.write('Hola, Mundo!');
+        res.end();
+    });
+
     //Servimos el archivo angular
-    this.expressServer.get('*', function(req, res){
+    this.expressServer.get('/', function(req, res){
         res.sendfile('app/static/index.htm');
     });
+
+
+
 };
 
 ExpressServer.prototype.router = function(controller,funcionalidad,method,url){
