@@ -10,6 +10,7 @@
     //////////////////////////////////////////////////////////////////
     // Aprobación y Rechazo
     /////////////////////////////////////////////////////////////////
+    //Aprobar una notificación
     $scope.Aprobar = function (not) {
         if(confirm('¿Desea aprobar el folio: ' + not.identificador + '?')){
             if ($scope.observacion != null){
@@ -25,6 +26,7 @@
         
     };
 
+    //Success de aprobación
     var putASuccessCallback = function (data, status, headers, config) {
         alertFactory.info('Aprobada Correctamente.')
         $('#btnApprove').button('reset');
@@ -32,6 +34,7 @@
         $rootScope.Reload();
     };
 
+    //Rechazar una notificación 
     $scope.Rechazar = function (not) {
         if(confirm('¿Desea rechazar el folio: ' + not.identificador + '?')){
             if ($scope.observacion != null ) {
@@ -46,9 +49,25 @@
         }
     };
 
+    //Success de rechazo
     var putRSuccessCallback = function (data, status, headers, config) {
         alertFactory.warning('Rechazada Correctamente.')
         $('#btnReject').button('reset');
+        $rootScope.actualizar = true;
+        $rootScope.Reload();
+    };
+
+    //Aceptar una alerta
+    $scope.Aceptar = function (not) {
+        $('#btnAceptar').button('loading');
+        aprobacionRepository.aceptar(not.idAprobacion)
+            .success(aceptarSuccessCallback)
+            .error(errorCallBack);
+    };
+
+    //Success de Aceptar
+    var aceptarSuccessCallback = function (data, status, headers, config) {
+        $('#btnAceptar').button('reset');
         $rootScope.actualizar = true;
         $rootScope.Reload();
     };

@@ -10,6 +10,9 @@ registrationModule.factory('aprobacionRepository', function ($http) {
         },
         responder: function (id,aprobacion,observacion) {
             return $http.post(aprobacionUrl + '2|' + id + '|' + aprobacion + '|' + observacion);
+        },
+        aceptar: function (id) {
+            return $http.post(aprobacionUrl + '3|' + id);
         }
     };
 });

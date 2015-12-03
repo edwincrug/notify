@@ -31,7 +31,6 @@ registrationModule.controller("notificacionController", function ($scope, $filte
         //Inicializamos el reloj
         setInterval(function () {
             $scope.ReloadTime();
-            $('.parpadear').toggle('highlight');
         }, 1000);
         //Inicializamos el reloj
         setInterval(function () {
@@ -51,8 +50,8 @@ registrationModule.controller("notificacionController", function ($scope, $filte
         GetMarca();
 
         var socket = io.connect('http://localhost:3100/');
-        socket.on('mejorandola', function(data){
-            alertFactory.warning(data.hola);
+            socket.on('mejorandola', function(data){
+           // alertFactory.warning(data.hola);
         });
 
     };
@@ -145,11 +144,12 @@ registrationModule.controller("notificacionController", function ($scope, $filte
     //////////////////////////////////////////////////////////////////
 
     $scope.VerDocumento = function(not) {
-        window.open("", "", "width=1024, height=768");
+        window.open(not.adjunto, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=1024, height=768");
+        myWindow.document.write("<p>Detalle de la orden de compra en Business PRO</p>");
     };
 
     $scope.VerBusiness = function(not) {
-        var myWindow = window.open("", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=400, height=400");
+        var myWindow = window.open(not.link, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=1024, height=768");
         myWindow.document.write("<p>Detalle de la orden de compra en Business PRO</p>");
     };
 

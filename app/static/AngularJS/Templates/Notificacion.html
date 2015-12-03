@@ -29,11 +29,11 @@
             <div id="cuerpoTab">
                 <div class="divider"></div>
                 <accordion close-others="oneAtATime">
-                    <accordion-group is-open="notificacion.open" ng-repeat="notificacion in listaNotificacion | filter:keySearch " class="itemList" ng-class="{ 'panel-primary': notificacion.estado == 0, 'panel-info': notificacion.estado == 1 }" ng-click="Visto(notificacion)" id="{{ notificacion.idAprobacion }}">
+                    <accordion-group is-open="notificacion.open" ng-repeat="notificacion in listaNotificacion | filter:keySearch " class="itemList" ng-class="{ 'panel-primary': ( notificacion.estado == 0 && notificacion.tipoNotificacion != 2), 'panel-warning':(notificacion.tipoNotificacion == 2), 'panel-info': (notificacion.estado == 1 && notificacion.tipoNotificacion != 2) }" ng-click="Visto(notificacion)" id="{{ notificacion.idAprobacion }}">
                     <accordion-heading>
                     <i class="pull-right glyphicon flecha" ng-class="{'glyphicon-chevron-down': notificacion.open, 'glyphicon-chevron-right': !notificacion.open}" ng-hide="notificacion.MinutosFaltan >= 0 && notificacion.MinutosFaltan < 6 && notificacion.escalado != -1"></i>
                     <div class="row">
-                        <div class="col-xs-1"> <span class="glyphicon iconito" ng-class="{ 'glyphicon-hourglass': notificacion.tipoNotificacion == 1 && notificacion.chatPendiente == 0, 'glyphicon-bell': (notificacion.tipoNotificacion == 2 && notificacion.chatPendiente == 0) || (notificacion.escalado == -1 && notificacion.chatPendiente == 0),  'glyphicon-comment parpadear': notificacion.chatPendiente > 0 }" aria-hidden="true"></span> </div>
+                        <div class="col-xs-1"> <span class="glyphicon iconito" ng-class="{ 'glyphicon-hourglass': notificacion.tipoNotificacion == 1 && notificacion.chatPendiente == 0, 'glyphicon-bell': (notificacion.tipoNotificacion == 2 && notificacion.chatPendiente == 0), 'glyphicon-send': (notificacion.tipoNotificacion == 3 && notificacion.chatPendiente == 0),  'glyphicon-comment parpadear': notificacion.chatPendiente > 0 }" aria-hidden="true"></span> </div>
                         <div class="col-xs-4">{{ notificacion.agencia }} </div>
                         <div class="col-xs-4">{{ notificacion.identificador }} </div>
                         <div class="col-xs-2">{{ notificacion.fecha  | date:"dd/MM HH:mm" }} </div>
@@ -58,7 +58,6 @@
                         <div class="labelNotificacion col-xs-3">Descripción:</div>
                         <div class=" col-xs-9">{{ notificacion.descripcionLarga  }}</div>
                     </div>
-
                     <div class="row botonera">
                         <button type="button" class="btn btn-info btn-sm btnVerBusiness" tooltip="Ver el detalle en BP" ng-hide="notificacion.modalidadAdjunto == 2" ng-click="VerBusiness(notificacion)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> BusinessPro</button>
                         <button type="button" class="btn btn-info btn-sm btnVerBusiness" tooltip="Ver el documento" ng-hide="notificacion.modalidadAdjunto == 1" ng-click="VerDocumento(notificacion)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Ver Documento</button>
@@ -66,12 +65,18 @@
                         <span class="glyphicon glyphicon-phone iconBadge" aria-hidden="true" ng-class="{ 'oculto': notificacion.correoEnviado == 0 || notificacion.tipoNotificacion != 1 }"><span class="badge badgeNotificacion">{{ notificacion.correoEnviado }}</span></span>
                         <span class="glyphicon glyphicon-circle-arrow-up iconBadge" tooltip="{{ notificacion.nivel + 1 }}º nivel" ng-class="{ 'oculto': notificacion.nivel == 0 }"> <span class="badge badgeNotificacion">{{ notificacion.nivel + 1 }}</span></span> 
                     </div>
-                    <hr ng-class="{ 'oculto': notificacion.tipoNotificacion != 1 }" />
+                    <hr ng-class="{ 'oculto': notificacion.tipoNotificacion == 3 }" />
                     <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 1 }" ng-controller="aprobacionController">
                         <div class="col-xs-6"><textarea class="form-control" rows="3" ng-model="observacion"></textarea></div>
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-success btn-sm btnAprove" data-loading-text="Aprobando..." id="btnApprove" ng-click="Aprobar(notificacion)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Apruebo</button>
-                            <button type="button" class="btn btn-danger btn-sm btnReject" data-loading-text="Rechazando..." id="btnReject" ng-click="Rechazar(notificacion)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Rechazo</button>
+                            <button type="button" class="btn btn-success btn-sm btnAprove" data-loading-text="Aprobando..." id="btnApprove" ng-click="Aprobar(notificacion)" tooltip="Aprobar"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Apruebo</button>
+                            <button type="button" class="btn btn-danger btn-sm btnReject" data-loading-text="Rechazando..." id="btnReject" ng-click="Rechazar(notificacion)" tooltip="Rechazar"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Rechazo</button>
+                        </div>
+                    </div>
+                    <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 2 }" ng-controller="aprobacionController">
+                        <div class="col-xs-10"></div>
+                        <div class="col-xs-2">
+                            <button type="button" class="btn btn-warning btn-sm btnAprove" data-loading-text="Procesando..." id="btnAceptar" ng-click="Aceptar(notificacion)" tooltip="Aceptar"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Aceptar</button>
                         </div>
                     </div>
                 </div>
@@ -86,11 +91,11 @@
 <div id="cuerpoTab">
     <div class="divider"></div>
     <accordion close-others="oneAtATime">
-        <accordion-group is-open="status.open" ng-repeat="aprobacion in listaAprobacion | filter:keySearch" class="itemList" ng-class="{ 'panel-success': aprobacion.aprobacion == 3, 'panel-danger': aprobacion.aprobacion == 4 }">
+        <accordion-group is-open="status.open" ng-repeat="aprobacion in listaAprobacion | filter:keySearch" class="itemList" ng-class="{ 'panel-success': ( aprobacion.aprobacion == 3 && aprobacion.tipoNotificacion != 2 ), 'panel-danger': ( aprobacion.aprobacion == 4 && aprobacion.tipoNotificacion != 2 ), 'panel-warning': ( aprobacion.tipoNotificacion == 2 ) }">
         <accordion-heading>
         <i class="pull-right glyphicon flecha" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
         <div class="row">
-            <div class="col-xs-1"> <span class="glyphicon iconito" ng-class="{ 'glyphicon-ok': aprobacion.aprobacion == 3, 'glyphicon-remove': aprobacion.aprobacion == 4 }" aria-hidden="true"></span> </div>
+            <div class="col-xs-1"> <span class="glyphicon iconito" ng-class="{ 'glyphicon-ok': ( aprobacion.aprobacion == 3 && aprobacion.tipoNotificacion != 2 ), 'glyphicon-remove': ( aprobacion.aprobacion == 4 && aprobacion.tipoNotificacion != 2 ), 'glyphicon-bell': ( aprobacion.tipoNotificacion == 2 ) }" aria-hidden="true"></span> </div>
             <div class="col-xs-4">{{ aprobacion.agencia }} </div>
             <div class="col-xs-4">{{ aprobacion.identificador }} </div>
             <div class="col-xs-2">{{ aprobacion.fecha  | date:"dd/MM HH:mm" }} </div>
@@ -114,16 +119,16 @@
             <div class="labelNotificacion col-xs-3">Descripción:</div>
             <div class=" col-xs-9">{{ aprobacion.descripcionLarga  }}</div>
         </div>
-        <hr />
-        <div class="row">
+        <hr ng-class="{ 'oculto': notificacion.tipoNotificacion == 2 }" />
+        <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 2 }">
             <div class="labelNotificacion col-xs-3">{{ (aprobacion.agrupacion === 0 ?  'Unitario': 'Lote') }}</div>
             <div class=" col-xs-9">{{ aprobacion.aprobador  }}</div>
         </div>
-        <div class="row">
+        <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 2 }">
             <div class="labelNotificacion col-xs-3">Comentario:</div>
             <div class=" col-xs-9">{{ aprobacion.comentario  }}</div>
         </div>
-        <div class="row">
+        <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 2 }">
             <div class="labelNotificacion col-xs-3">Fecha:</div>
             <div class=" col-xs-9">{{ aprobacion.fechaAprobacion  | date:"dd-MM-yy HH:mm"  }}</div>
         </div>
