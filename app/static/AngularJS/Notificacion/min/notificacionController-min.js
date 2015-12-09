@@ -58,7 +58,7 @@ registrationModule.controller("notificacionController", function ($scope, $filte
 
     //Mensajes en caso de error
     var errorCallBack = function (data, status, headers, config) {
-        alertFactory.error('Ocurrio un problema');
+        alertFactory.error('Ocurrio un problema: ' + data);
         $('#btnReject').button('reset');
         $('#btnApprove').button('reset');
     };

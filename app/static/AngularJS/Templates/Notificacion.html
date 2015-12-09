@@ -58,6 +58,10 @@
                         <div class="labelNotificacion col-xs-3">Descripción:</div>
                         <div class=" col-xs-9">{{ notificacion.descripcionLarga  }}</div>
                     </div>
+                    <div class="row" ng-show="notificacion.tipoNotificacion == 3">
+                        <div class="labelNotificacion col-xs-3">Estatus:</div>
+                        <div class="labelNotificacion col-xs-9"> Pendiente de aprobación </div>
+                    </div>
                     <div class="row botonera">
                         <button type="button" class="btn btn-info btn-sm btnVerBusiness" tooltip="Ver el detalle en BP" ng-hide="notificacion.modalidadAdjunto == 2" ng-click="VerBusiness(notificacion)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> BusinessPro</button>
                         <button type="button" class="btn btn-info btn-sm btnVerBusiness" tooltip="Ver el documento" ng-hide="notificacion.modalidadAdjunto == 1" ng-click="VerDocumento(notificacion)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Ver Documento</button>

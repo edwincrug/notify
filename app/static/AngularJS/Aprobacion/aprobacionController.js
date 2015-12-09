@@ -28,10 +28,15 @@
 
     //Success de aprobación
     var putASuccessCallback = function (data, status, headers, config) {
-        alertFactory.info('Aprobada Correctamente.')
+        if(data == 0){
+            alertFactory.info('Aprobada Correctamente.')
+        }
+        if(data == -1){
+            alertFactory.error('La solicitud fue aprobada previamente por otro autorizador.');
+        }
         $('#btnApprove').button('reset');
-        $rootScope.actualizar = true;
-        $rootScope.Reload();
+            $rootScope.actualizar = true;
+            $rootScope.Reload();
     };
 
     //Rechazar una notificación 
