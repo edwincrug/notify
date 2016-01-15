@@ -167,6 +167,12 @@
 .btnReject {
   float: right; }
 
+  /* LQMA 13012015 boton agregado de revision */
+.btnCheck
+{
+    float: right;
+}
+
 .badgeNotificacion {
   margin-bottom: 10px;
   padding-bottom: 5px;
@@ -209,3 +215,4 @@
     right: 0;
     margin-top: 10px;
     margin-right: 3px; } }
+

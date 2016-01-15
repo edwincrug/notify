@@ -32,6 +32,7 @@
     };
 
     $scope.EnviarComentario = function () {
+
         if ($scope.comentario.length > 0)
         {
             $('#btnEnviar').button('loading');

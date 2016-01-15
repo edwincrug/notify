@@ -29,13 +29,13 @@
             <div id="cuerpoTab">
                 <div class="divider"></div>
                 <accordion close-others="oneAtATime">
-                    <accordion-group is-open="notificacion.open" ng-repeat="notificacion in listaNotificacion | filter:keySearch " class="itemList" ng-class="{ 'panel-primary': ( notificacion.estado == 0 && notificacion.tipoNotificacion != 2), 'panel-warning':(notificacion.tipoNotificacion == 2), 'panel-info': (notificacion.estado == 1 && notificacion.tipoNotificacion != 2) }" ng-click="Visto(notificacion)" id="{{ notificacion.idAprobacion }}">
+                    <accordion-group is-open="notificacion.open" ng-repeat="notificacion in listaNotificacion | filter:keySearch " class="itemList" ng-class="{ 'panel-primary': ( notificacion.estado == 0 && notificacion.tipoNotificacion != 2), 'panel-warning':(notificacion.tipoNotificacion == 2), 'panel-info': (notificacion.estado == 1 && notificacion.tipoNotificacion != 2 && notificacion.estatus != 6), 'panel-default' : ( notificacion.estado == 1 && notificacion.tipoNotificacion != 2 && notificacion.estatus == 6) }" ng-click="Visto(notificacion)" id="{{ notificacion.idAprobacion }}">
                     <accordion-heading>
                     <i class="pull-right glyphicon flecha" ng-class="{'glyphicon-chevron-down': notificacion.open, 'glyphicon-chevron-right': !notificacion.open}" ng-hide="notificacion.MinutosFaltan >= 0 && notificacion.MinutosFaltan < 6 && notificacion.escalado != -1"></i>
                     <div class="row">
                         <div class="col-xs-1"> <span class="glyphicon iconito" ng-class="{ 'glyphicon-hourglass': notificacion.tipoNotificacion == 1 && notificacion.chatPendiente == 0, 'glyphicon-bell': (notificacion.tipoNotificacion == 2 && notificacion.chatPendiente == 0), 'glyphicon-send': (notificacion.tipoNotificacion == 3 && notificacion.chatPendiente == 0),  'glyphicon-comment parpadear': notificacion.chatPendiente > 0 }" aria-hidden="true"></span> </div>
                         <div class="col-xs-4">{{ notificacion.agencia }} </div>
-                        <div class="col-xs-4">{{ notificacion.identificador }} </div>
+                        <div class="col-xs-4">{{ notificacion.identificador }}</div>
                         <div class="col-xs-2">{{ notificacion.fecha  | date:"dd/MM HH:mm" }} </div>
                         <div class="col-xs-1"></div>
                         <div class="timeContent" ng-hide="notificacion.escalado == -1 || notificacion.MinutosFaltan < 0 ||  notificacion.MinutosFaltan > 6 || notificacion.tipoNotificacion == 2"> 
@@ -73,8 +73,9 @@
                     <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 1 }" ng-controller="aprobacionController">
                         <div class="col-xs-6"><textarea class="form-control" rows="3" ng-model="observacion"></textarea></div>
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-success btn-sm btnAprove" data-loading-text="Aprobando..." id="btnApprove" ng-click="Aprobar(notificacion)" tooltip="Aprobar"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Apruebo</button>
-                            <button type="button" class="btn btn-danger btn-sm btnReject" data-loading-text="Rechazando..." id="btnReject" ng-click="Rechazar(notificacion)" tooltip="Rechazar"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Rechazo</button>
+                            <button type="button" class="btn btn-success btn-sm btnAprove" data-loading-text="Aprobando..." id="btnApprove" ng-class="{'disabled' : notificacion.estatus == 6}" ng-click="Aprobar(notificacion)" tooltip="Aprobar"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Apruebo</button>
+                            <button type="button" class="btn btn-danger btn-sm btnReject" data-loading-text="Rechazando..." id="btnReject" ng-class="{'disabled' : notificacion.estatus == 6}" ng-click="Rechazar(notificacion)" tooltip="Rechazar"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Rechazo</button>
+                            <button type="button" class="btn btn-default btn-sm btnCheck" data-loading-text="Revisando..." id="btnCheck" ng-click="Revisar(notificacion)" ng-class="{'disabled' : notificacion.estatus == 6}" ng-hide="notificacion.agrupacion != 0" tooltip="Revisar"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>Revisión</button>
                         </div>
                     </div>
                     <div class="row" ng-class="{ 'oculto': notificacion.tipoNotificacion != 2 }" ng-controller="aprobacionController">
@@ -179,7 +180,14 @@
             </div>
             <div class="modal-footer" ng-hide="currentNotificacion.estatus >= 3">
                 <div class="row" >
-                    <div class="col-xs-9"><input type="text" class="form-control" ng-model="comentario" placeholder="Escriba un comentario" /></div>
+                    <div class="col-xs-9">
+                    
+                    <!--<input type="text" class="form-control" ng-model="comentario" placeholder="Escriba un comentario" /> 
+                        LQMA comment 14012015
+                    -->
+                    <textarea class="form-control" rows="3" ng-model="comentario" placeholder="Escriba un comentario"></textarea>
+
+                    </div>
                     <button type="button" class="btn btn-primary" data-loading-text="Enviando..." id="btnEnviar" ng-click="EnviarComentario()">Enviar</button>
                 </div>
                 

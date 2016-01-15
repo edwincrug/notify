@@ -61,6 +61,11 @@
 {
     float: right;
 }
+/* LQMA 13012015 boton agregado de revision */
+.btnCheck
+{
+    float: right;
+}
 
 .badgeNotificacion
 {
